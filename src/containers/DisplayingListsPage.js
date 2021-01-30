@@ -20,7 +20,6 @@ const ListsContainer = styled.div`
 const ListsDetails = styled.div`
     padding: 12px;
     background-color: white;
-    box-shadow: 0px 0px 4px black;
     border-radius: 8px;
     width: 90%;
     margin: auto;
@@ -64,9 +63,9 @@ const ListsDetails = styled.div`
     }
 
     @media(min-width: 720px) {
-        width: 80%;
+        width: 90%;
         margin-right: 0;
-        margin-left: 17%;
+        margin-left: 7%;
     } 
 `;
 const Location = styled.div`

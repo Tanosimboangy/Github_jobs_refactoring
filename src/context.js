@@ -2,8 +2,6 @@ import React, { useEffect, useReducer } from 'react'
 const GlobalContext = React.createContext();
 import axios from "axios";
 
-const  CORS_KEY = "https://cors-anywhere.herokuapp.com/"
-const API_URL = "https://jobs.github.com/positions.json"
 
 function ContextProvider({children}) {
     const [state, dispatch] = useReducer((state, action) => {
@@ -13,6 +11,13 @@ function ContextProvider({children}) {
                     ...state,
                     loading: false,
                     data: action.playload,
+                }
+            }
+            case 'FETCHING_CITY': {
+                return {
+                    ...state,
+                    description: action.description,
+                    data: action.playloads,
                 }
             }
             case 'FETCH_FAILED' : return {
@@ -27,23 +32,41 @@ function ContextProvider({children}) {
         return state;
     },  {
         data: [ ],
+        title: '',
+        location: '',
+        fulltime: '',
         loading: true,
     })
 
     function fetchingFulltimesJobsData() {
         axios
-          .get(CORS_KEY + API_URL)
-          .then(res => {
-            dispatch({ type: 'FETCHING_DATA', playload : res.data } )    
+          .get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json")
+          .then(respose => {
+            dispatch({ type: 'FETCHING_DATA', playload: respose.data } )    
           })
           .catch(error => {
             dispatch({type : "FETCH_FAILED" })
           })
-      }
+    }
+    useEffect(() => {
+    fetchingFulltimesJobsData()
+    }, [])
 
-      useEffect(() => {
-        fetchingFulltimesJobsData()
-      }, [])
+    function handleHeaderSearch() {
+        let API = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?"
+        axios
+          .get(API + `title=${location}`)
+          .then(response => {
+            dispatch({ type: 'FETCHING_CITY', playloads: response.data, location: location})
+          })
+          .catch(error => {
+            dispatch({type : "FETCH_FAILED" })
+          })
+    }
+
+    useEffect(() => {
+        handleHeaderSearch();
+    }, [state.description])
 
     return (
         <GlobalContext.Provider value={{state, dispatch}}>
@@ -51,5 +74,9 @@ function ContextProvider({children}) {
         </GlobalContext.Provider>
     )
 }
+
+
+// useReducer(function, initialState)
+
 
 export {GlobalContext ,ContextProvider}

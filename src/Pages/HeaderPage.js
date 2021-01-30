@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
+import {GlobalContext} from '../context';
 
 const Header = styled.header`
     background-image: url(https://raw.githubusercontent.com/onja-org/github-jobs/main/backgroundImg.png);
@@ -62,10 +63,13 @@ const Button = styled.button`
 `;
 
 function HeaderPage() {
+    const {dispatch, state} = useContext(GlobalContext);
+    let location = state.location;
 
     function handleHeaderSearch(e) {
         e.preventDefault();
-        console.log(e.target.inputValue.value);
+        const el = e.target.value;
+        location: el;
         e.target.reset();
     }
 

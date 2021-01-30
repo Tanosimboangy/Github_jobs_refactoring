@@ -36089,8 +36089,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var GlobalContext = _react.default.createContext();
 
 exports.GlobalContext = GlobalContext;
-var CORS_KEY = "https://cors-anywhere.herokuapp.com/";
-var API_URL = "https://jobs.github.com/positions.json";
 
 function ContextProvider(_ref) {
   var children = _ref.children;
@@ -36102,6 +36100,14 @@ function ContextProvider(_ref) {
           return _objectSpread(_objectSpread({}, state), {}, {
             loading: false,
             data: action.playload
+          });
+        }
+
+      case 'FETCHING_CITY':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            description: action.description,
+            data: action.playloads
           });
         }
 
@@ -36120,6 +36126,9 @@ function ContextProvider(_ref) {
     return state;
   }, {
     data: [],
+    title: '',
+    location: '',
+    fulltime: '',
     loading: true
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
@@ -36127,10 +36136,10 @@ function ContextProvider(_ref) {
       dispatch = _useReducer2[1];
 
   function fetchingFulltimesJobsData() {
-    _axios.default.get(CORS_KEY + API_URL).then(function (res) {
+    _axios.default.get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json").then(function (respose) {
       dispatch({
         type: 'FETCHING_DATA',
-        playload: res.data
+        playload: respose.data
       });
     }).catch(function (error) {
       dispatch({
@@ -36142,13 +36151,33 @@ function ContextProvider(_ref) {
   (0, _react.useEffect)(function () {
     fetchingFulltimesJobsData();
   }, []);
+
+  function handleHeaderSearch() {
+    var API = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?";
+
+    _axios.default.get(API + "title=".concat(location)).then(function (response) {
+      dispatch({
+        type: 'FETCHING_CITY',
+        playloads: response.data,
+        location: location
+      });
+    }).catch(function (error) {
+      dispatch({
+        type: "FETCH_FAILED"
+      });
+    });
+  }
+
+  (0, _react.useEffect)(function () {
+    handleHeaderSearch();
+  }, [state.description]);
   return /*#__PURE__*/_react.default.createElement(GlobalContext.Provider, {
     value: {
       state: state,
       dispatch: dispatch
     }
   }, children);
-}
+} // useReducer(function, initialState)
 },{"react":"node_modules/react/index.js","axios":"node_modules/axios/index.js"}],"node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v17.0.1
  * react-is.development.js
@@ -38162,11 +38191,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _context = require("../context");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _templateObject4() {
   var data = _taggedTemplateLiteral(["\n    border: none;\n    line-height: 2.5;\n    padding: 6px 20px;\n    font-size: 1rem;\n    text-align: center;\n    cursor: pointer;\n    outline: none;\n    color: #fff;\n    text-shadow: 1px 1px 1px #000;\n    border-radius: 10px;\n    background-color: #001ddc;\n    background-image: linear-gradient(to top left,\n    rgba(0, 0, 0, .2),\n    rgba(0, 0, 0, .2) 30%,\n    rgba(0, 0, 0, 0));\n    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),\n                inset -2px -2px 3px rgba(0, 0, 0, .6);\n"]);
@@ -38219,9 +38254,18 @@ var Input = _styledComponents.default.input(_templateObject3());
 var Button = _styledComponents.default.button(_templateObject4());
 
 function HeaderPage() {
+  var _useContext = (0, _react.useContext)(_context.GlobalContext),
+      dispatch = _useContext.dispatch,
+      state = _useContext.state;
+
+  var location = state.location;
+
   function handleHeaderSearch(e) {
     e.preventDefault();
-    console.log(e.target.inputValue.value);
+    var el = e.target.value;
+
+    location: el;
+
     e.target.reset();
   }
 
@@ -38238,7 +38282,7 @@ function HeaderPage() {
 
 var _default = HeaderPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/containers/SearchPage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js"}],"src/containers/SearchPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38356,7 +38400,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    padding: 12px;\n    background-color: white;\n    box-shadow: 0px 0px 4px black;\n    border-radius: 8px;\n    width: 90%;\n    margin: auto;\n    margin-bottom: 23px;\n    div {\n        display: flex;\n        flex-direction: row;\n        align-items: flex-start;\n        padding-bottom: 17px;\n        img {\n            max-width: 90px;\n            border-radius: 8px;\n        }\n        ul {\n            padding-left: 16px;\n            li:nth-of-type(1) {\n                padding-bottom: 8px;\n                font-family: \"Roboto_bold\";\n                font-weight: bold;\n                font-size: 12px;\n                line-height: 14px;\n                color: #334680;\n            }\n            li:nth-of-type(2) {\n                padding-bottom: 20px;\n                font-family: \"Roboto_regular\";\n                font-weight: normal;\n                font-size: 16px;\n                line-height: 19px;\n                color: #334680;\n            }\n            li:nth-of-type(3) {\n                button {\n                    background: white;\n                    border-radius: 5px;\n                    border: 1px solid black;\n                    padding: 5px;\n                }\n            }\n        }\n    }\n\n    @media(min-width: 720px) {\n        width: 80%;\n        margin-right: 0;\n        margin-left: 17%;\n    } \n"]);
+  var data = _taggedTemplateLiteral(["\n    padding: 12px;\n    background-color: white;\n    border-radius: 8px;\n    width: 90%;\n    margin: auto;\n    margin-bottom: 23px;\n    div {\n        display: flex;\n        flex-direction: row;\n        align-items: flex-start;\n        padding-bottom: 17px;\n        img {\n            max-width: 90px;\n            border-radius: 8px;\n        }\n        ul {\n            padding-left: 16px;\n            li:nth-of-type(1) {\n                padding-bottom: 8px;\n                font-family: \"Roboto_bold\";\n                font-weight: bold;\n                font-size: 12px;\n                line-height: 14px;\n                color: #334680;\n            }\n            li:nth-of-type(2) {\n                padding-bottom: 20px;\n                font-family: \"Roboto_regular\";\n                font-weight: normal;\n                font-size: 16px;\n                line-height: 19px;\n                color: #334680;\n            }\n            li:nth-of-type(3) {\n                button {\n                    background: white;\n                    border-radius: 5px;\n                    border: 1px solid black;\n                    padding: 5px;\n                }\n            }\n        }\n    }\n\n    @media(min-width: 720px) {\n        width: 90%;\n        margin-right: 0;\n        margin-left: 7%;\n    } \n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -38628,7 +38672,7 @@ exports.GlobalStyles = void 0;
 var _styledComponents = require("styled-components");
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    html, body {\n        font-family: 'Helvetica Neue', Helvetica, sans-serif;\n        -webkit-font-smoothing: antialiased;\n        -moz-osx-font-smoothing: antialiased;\n        background-color: #ffffff;\n        color: #333333;\n        font-size: 16px;\n        margin: 0;\n        h1, h2, h3, h4, h5, h6, p {\n            margin: 0;\n        }\n        ul {\n            padding: 0;\n            margin: 0;\n            li {\n                list-style: none;\n            }\n        }\n        a {\n            text-decoration: none;\n        }\n    }\n"]);
+  var data = _taggedTemplateLiteral(["\n    html, body {\n        font-family: 'Helvetica Neue', Helvetica, sans-serif;\n        -webkit-font-smoothing: antialiased;\n        -moz-osx-font-smoothing: antialiased;\n        background: #f3f3fa5c;\n        color: #333333;\n        font-size: 16px;\n        margin: 0;\n        h1, h2, h3, h4, h5, h6, p {\n            margin: 0;\n        }\n        ul {\n            padding: 0;\n            margin: 0;\n            li {\n                list-style: none;\n            }\n        }\n        a {\n            text-decoration: none;\n        }\n    }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -38687,7 +38731,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61032" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51581" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
