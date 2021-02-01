@@ -27,16 +27,15 @@ const SearchFullTimejobs = styled.div`
 `;
 
 function SearchPage() {
-    const [fulltime, setFulltime] = useState("");
-    const {dispatch, state, handleSearch} = useContext(GlobalContext);
+    const [fulltime, setFulltime] = useState(false);
+    const {dispatch, state, handlefulltimejobs} = useContext(GlobalContext);
     
     function handleCheckbox(e) {
         e.preventDefault();
-        const el = e.target.fulltime.value;
+        const el = e.target.value;
         console.log(el);
-        setFulltime(true);
-        // handleSearch(true)
-        console.log("name is clicked");
+        setFulltime(el);
+        handlefulltimejobs(el);
     }
 
     return (

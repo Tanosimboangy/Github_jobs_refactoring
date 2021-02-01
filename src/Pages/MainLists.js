@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import SearchPage from '../containers/SearchPage';
-import DisplayingListsPage from '../containers/DisplayingListsPage';
+import JobsLists from '../containers/JobsLists';
 
 const Main = styled.main`
     display: flex;
@@ -22,7 +22,7 @@ function MainLists() {
     return (
         <Main>
             <SearchPage />
-            <DisplayingListsPage />
+            <JobsLists />
         </Main>
     )
 }

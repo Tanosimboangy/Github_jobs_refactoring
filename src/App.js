@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
-import HeaderPage from '../Pages/HeaderPage';
-import MainLists from '../Pages/MainLists';
-import JobDetails from '../Pages/JobDetails';
+import HeaderPage from './Pages/HeaderPage';
+import MainLists from './Pages/MainLists';
+import JobDetails from './Pages/JobDetails';
 import styled from 'styled-components';
 
 const Heading = styled.h1`

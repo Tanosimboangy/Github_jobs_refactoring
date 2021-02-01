@@ -36110,6 +36110,13 @@ function ContextProvider(_ref) {
           });
         }
 
+      case 'FETCHING_FULLTIMEJOBS':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            data: action.fulltimejobs
+          });
+        }
+
       case 'FETCH_FAILED':
         return _objectSpread(_objectSpread({}, state), {}, {
           error: "You can try again your fetch!"
@@ -36170,11 +36177,32 @@ function ContextProvider(_ref) {
   (0, _react.useEffect)(function () {
     handleSearchHeader();
   }, [state.details]);
+
+  function handlefulltimejobs(fullTimeJobs) {
+    var API_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=".concat(fullTimeJobs);
+
+    _axios.default.get(API_URL).then(function (response) {
+      dispatch({
+        type: 'FETCHING_FULLTIMEJOBS',
+        fulltimejobs: response.data,
+        full_time: fullTimeJobs
+      });
+    }).catch(function (error) {
+      dispatch({
+        type: "FETCH_FAILED"
+      });
+    });
+  }
+
+  (0, _react.useEffect)(function () {
+    handlefulltimejobs();
+  }, [state.fullTimeJobs]);
   return /*#__PURE__*/_react.default.createElement(GlobalContext.Provider, {
     value: {
       state: state,
       dispatch: dispatch,
-      handleSearchHeader: handleSearchHeader
+      handleSearchHeader: handleSearchHeader,
+      handlefulltimejobs: handlefulltimejobs
     }
   }, children);
 } // const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;
@@ -38183,7 +38211,379 @@ exports.ServerStyleSheet = Ue;
 "production" !== "development" && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://www.styled-components.com/docs/basics#react-native"), "production" !== "development" && "test" !== "development" && (window["__styled-components-init__"] = window["__styled-components-init__"] || 0, 1 === window["__styled-components-init__"] && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://s-c.sh/2BAXzed for more info."), window["__styled-components-init__"] += 1);
 var _default = qe;
 exports.default = _default;
-},{"react-is":"node_modules/react-is/index.js","react":"node_modules/react/index.js","shallowequal":"node_modules/shallowequal/index.js","@emotion/stylis":"node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/unitless":"node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/is-prop-valid":"node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js","hoist-non-react-statics":"node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","process":"../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
+},{"react-is":"node_modules/react-is/index.js","react":"node_modules/react/index.js","shallowequal":"node_modules/shallowequal/index.js","@emotion/stylis":"node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/unitless":"node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/is-prop-valid":"node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js","hoist-non-react-statics":"node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","process":"../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"src/components/header/styles/header.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Button = exports.Input = exports.Form = exports.Container = void 0;
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n  border: none;\n  line-height: 2.5;\n  padding: 6px 20px;\n  font-size: 1rem;\n  text-align: center;\n  cursor: pointer;\n  outline: none;\n  color: #fff;\n  text-shadow: 1px 1px 1px #000;\n  border-radius: 10px;\n  background-color: #001ddc;\n  background-image: linear-gradient(\n    to top left,\n    rgba(0, 0, 0, 0.2),\n    rgba(0, 0, 0, 0.2) 30%,\n    rgba(0, 0, 0, 0)\n  );\n  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),\n    inset -2px -2px 3px rgba(0, 0, 0, 0.6);\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  width: 100%;\n  background: none;\n  border: none;\n  padding: 16px;\n  outline: none;\n  cursor: pointer;\n  font-size: 16px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n  margin-right: 15%;\n  margin-left: 15%;\n  max-width: 95%;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  background-color: white;\n  border-radius: 10px;\n  padding: 2px;\n  box-shadow: 0 0 2px black;\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  background-image: url('https://raw.githubusercontent.com/onja-org/github-jobs/main/backgroundImg.png');\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center;\n  border-radius: 8px;\n  margin-bottom: 40px;\n  max-width: 95%;\n  margin: auto;\n  margin-bottom: 42px;\n  padding: 40px 0;\n\n  @media (min-width: 720px) {\n    max-width: 90%;\n    margin: auto;\n    margin-bottom: 42px;\n  }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Container = _styledComponents.default.header(_templateObject());
+
+exports.Container = Container;
+
+var Form = _styledComponents.default.form(_templateObject2());
+
+exports.Form = Form;
+
+var Input = _styledComponents.default.input(_templateObject3());
+
+exports.Input = Input;
+
+var Button = _styledComponents.default.button(_templateObject4());
+
+exports.Button = Button;
+},{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/components/header/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Header;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _header = require("./styles/header");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function Header(_ref) {
+  var children = _ref.children,
+      restProps = _objectWithoutProperties(_ref, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(_header.Container, restProps, children);
+}
+
+Header.Form = function HeaderForm(_ref2) {
+  var children = _ref2.children,
+      restProps = _objectWithoutProperties(_ref2, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(_header.Form, restProps, children);
+};
+
+Header.Input = function HeaderInput(_ref3) {
+  var restProps = Object.assign({}, _ref3);
+  return /*#__PURE__*/_react.default.createElement(_header.Input, restProps);
+};
+
+Header.Button = function HeaderButton(_ref4) {
+  var children = _ref4.children,
+      restProps = _objectWithoutProperties(_ref4, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(_header.Button, restProps, children);
+};
+},{"react":"node_modules/react/index.js","./styles/header":"src/components/header/styles/header.js"}],"src/components/JobLists/styles/JobLists.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Location = exports.Button = exports.Title = exports.Company = exports.Wrapper = exports.Image = exports.CompanyInfo = exports.Details = exports.Container = void 0;
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject9() {
+  var data = _taggedTemplateLiteral(["\n     display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    max-width: 300px;\n    margin-left: auto;\n    li {\n        font-family: \"Roboto_regular\";\n        font-style: normal;\n        font-weight: 500;\n        font-size: 12px;\n        line-height: 14px;\n        color: #B9BDCF;\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        img {\n            padding-right: 10px;\n        }\n    }\n"]);
+
+  _templateObject9 = function _templateObject9() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject8() {
+  var data = _taggedTemplateLiteral(["\n    background: white;\n    border-radius: 5px;\n    border: 1px solid black;\n    padding: 5px;\n"]);
+
+  _templateObject8 = function _templateObject8() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject7() {
+  var data = _taggedTemplateLiteral(["\n    padding-bottom: 20px;\n    font-family: \"Roboto_regular\";\n    font-weight: normal;\n    font-size: 16px;\n    line-height: 19px;\n    color: #334680;\n"]);
+
+  _templateObject7 = function _templateObject7() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject6() {
+  var data = _taggedTemplateLiteral(["\n    padding-bottom: 8px;\n    font-family: \"Roboto_bold\";\n    font-weight: bold;\n    font-size: 12px;\n    line-height: 14px;\n    color: #334680;\n"]);
+
+  _templateObject6 = function _templateObject6() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject5() {
+  var data = _taggedTemplateLiteral(["\n    padding-left: 16px;\n"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n    max-width: 90px;\n    border-radius: 8px;\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: flex-start;\n    padding-bottom: 17px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n    padding: 12px;\n    background-color: white;\n    border-radius: 8px;\n    width: 90%;\n    margin: auto;\n    margin-bottom: 23px;\n    @media(min-width: 720px) {\n        width: 90%;\n        margin-right: 0;\n        margin-left: 7%;\n    } \n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n     display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: space-between;\n    margin-left: 2.5%;\n    margin-right: 2.5%;\n\n    @media(min-width: 720px) {\n        margin: 0;\n    }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Container = _styledComponents.default.div(_templateObject());
+
+exports.Container = Container;
+
+var Details = _styledComponents.default.div(_templateObject2());
+
+exports.Details = Details;
+
+var CompanyInfo = _styledComponents.default.div(_templateObject3());
+
+exports.CompanyInfo = CompanyInfo;
+
+var Image = _styledComponents.default.img(_templateObject4());
+
+exports.Image = Image;
+
+var Wrapper = _styledComponents.default.ul(_templateObject5());
+
+exports.Wrapper = Wrapper;
+
+var Company = _styledComponents.default.li(_templateObject6());
+
+exports.Company = Company;
+
+var Title = _styledComponents.default.li(_templateObject7());
+
+exports.Title = Title;
+
+var Button = _styledComponents.default.button(_templateObject8());
+
+exports.Button = Button;
+
+var Location = _styledComponents.default.div(_templateObject9());
+
+exports.Location = Location;
+},{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/components/JobLists/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = JobLists;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _JobLists = require("./styles/JobLists");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function JobLists(_ref) {
+  var children = _ref.children,
+      restProps = _objectWithoutProperties(_ref, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(_JobLists.Container, restProps, children);
+}
+
+JobLists.Details = function JobListsDetails(_ref2) {
+  var children = _ref2.children,
+      restProps = _objectWithoutProperties(_ref2, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(_JobLists.Details, restProps, children);
+};
+
+JobLists.Link = function JobListsLink(_ref3) {
+  var children = _ref3.children,
+      restProps = _objectWithoutProperties(_ref3, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Link, restProps, children);
+};
+
+JobLists.CompanyInfo = function JobListsCompanyInfo(_ref4) {
+  var children = _ref4.children,
+      restProps = _objectWithoutProperties(_ref4, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(CompanyInfo, restProps, children);
+};
+
+JobLists.Image = function JobListsImage(_ref5) {
+  var children = _ref5.children,
+      restProps = _objectWithoutProperties(_ref5, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Image, restProps, children);
+};
+
+JobLists.Wrapper = function JobListsWrapper(_ref6) {
+  var children = _ref6.children,
+      restProps = _objectWithoutProperties(_ref6, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Wrapper, restProps, children);
+};
+
+JobLists.Company = function JobListsCompany(_ref7) {
+  var children = _ref7.children,
+      restProps = _objectWithoutProperties(_ref7, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Company, restProps, children);
+};
+
+JobLists.Title = function JobListsTitle(_ref8) {
+  var children = _ref8.children,
+      restProps = _objectWithoutProperties(_ref8, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Title, restProps, children);
+};
+
+JobLists.Button = function JobListsButton(_ref9) {
+  var children = _ref9.children,
+      restProps = _objectWithoutProperties(_ref9, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Button, restProps, children);
+};
+
+JobLists.Location = function JobListsLocation(_ref10) {
+  var children = _ref10.children,
+      restProps = _objectWithoutProperties(_ref10, ["children"]);
+
+  return /*#__PURE__*/_react.default.createElement(Location, restProps, children);
+};
+},{"react":"node_modules/react/index.js","./styles/JobLists":"src/components/JobLists/styles/JobLists.js"}],"src/components/JobsDetails/index.js":[function(require,module,exports) {
+
+},{}],"src/components/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Header", {
+  enumerable: true,
+  get: function () {
+    return _header.default;
+  }
+});
+Object.defineProperty(exports, "JobLists", {
+  enumerable: true,
+  get: function () {
+    return _JobLists.default;
+  }
+});
+Object.defineProperty(exports, "JobsDetails", {
+  enumerable: true,
+  get: function () {
+    return _JobsDetails.default;
+  }
+});
+
+var _header = _interopRequireDefault(require("./header"));
+
+var _JobLists = _interopRequireDefault(require("./JobLists"));
+
+var _JobsDetails = _interopRequireDefault(require("./JobsDetails"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./header":"src/components/header/index.js","./JobLists":"src/components/JobLists/index.js","./JobsDetails":"src/components/JobsDetails/index.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38193,11 +38593,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _styledComponents = _interopRequireDefault(require("styled-components"));
-
 var _context = require("../context");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _components = require("../components");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -38214,56 +38612,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n    border: none;\n    line-height: 2.5;\n    padding: 6px 20px;\n    font-size: 1rem;\n    text-align: center;\n    cursor: pointer;\n    outline: none;\n    color: #fff;\n    text-shadow: 1px 1px 1px #000;\n    border-radius: 10px;\n    background-color: #001ddc;\n    background-image: linear-gradient(to top left,\n    rgba(0, 0, 0, .2),\n    rgba(0, 0, 0, .2) 30%,\n    rgba(0, 0, 0, 0));\n    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),\n                inset -2px -2px 3px rgba(0, 0, 0, .6);\n"]);
-
-  _templateObject4 = function _templateObject4() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    background: none;\n    border: none; \n    padding: 16px;\n    outline: none;\n    cursor: pointer;\n    font-size: 16px;\n"]);
-
-  _templateObject3 = function _templateObject3() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    margin-right: 15%;\n    margin-left: 15%;\n    max-width: 95%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    background-color: white;\n    border-radius: 10px;\n    padding: 2px;\n    box-shadow: 0 0 2px black;\n"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    background-image: url(https://raw.githubusercontent.com/onja-org/github-jobs/main/backgroundImg.png);\n    background-repeat: no-repeat;\n    background-size: cover;\n    background-position: center;\n    border-radius: 8px;\n    margin-bottom: 40px;\n    max-width: 95%;\n    margin: auto;\n    margin-bottom: 42px;\n    padding: 40px 0;\n\n    @media(min-width: 720px) {\n        max-width: 90%;\n        margin: auto;\n        margin-bottom: 42px;\n    }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var Header = _styledComponents.default.header(_templateObject());
-
-var Form = _styledComponents.default.form(_templateObject2());
-
-var Input = _styledComponents.default.input(_templateObject3());
-
-var Button = _styledComponents.default.button(_templateObject4());
 
 function HeaderPage() {
   var _useState = (0, _react.useState)(''),
@@ -38284,20 +38632,20 @@ function HeaderPage() {
     e.target.reset();
   }
 
-  return /*#__PURE__*/_react.default.createElement(Header, null, /*#__PURE__*/_react.default.createElement(Form, {
+  return /*#__PURE__*/_react.default.createElement(_components.Header, null, /*#__PURE__*/_react.default.createElement(_components.Header.Form, {
     onSubmit: handleHeaderSearch
-  }, /*#__PURE__*/_react.default.createElement(Input, {
+  }, /*#__PURE__*/_react.default.createElement(_components.Header.Input, {
     type: "text",
     name: "inputValue",
     placeholder: "Titles, companies, expertise or benefits"
-  }), /*#__PURE__*/_react.default.createElement(Button, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Header.Button, {
     type: "submit"
   }, "Search")));
 }
 
 var _default = HeaderPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js"}],"src/containers/SearchPage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../context":"src/context.js","../components":"src/components/index.js"}],"src/containers/SearchPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38356,7 +38704,7 @@ var Search = _styledComponents.default.div(_templateObject());
 var SearchFullTimejobs = _styledComponents.default.div(_templateObject2());
 
 function SearchPage() {
-  var _useState = (0, _react.useState)(""),
+  var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       fulltime = _useState2[0],
       setFulltime = _useState2[1];
@@ -38364,15 +38712,14 @@ function SearchPage() {
   var _useContext = (0, _react.useContext)(_context.GlobalContext),
       dispatch = _useContext.dispatch,
       state = _useContext.state,
-      handleSearch = _useContext.handleSearch;
+      handlefulltimejobs = _useContext.handlefulltimejobs;
 
   function handleCheckbox(e) {
     e.preventDefault();
-    var el = e.target.fulltime.value;
+    var el = e.target.value;
     console.log(el);
-    setFulltime(true); // handleSearch(true)
-
-    console.log("name is clicked");
+    setFulltime(el);
+    handlefulltimejobs(el);
   }
 
   return /*#__PURE__*/_react.default.createElement(Search, null, /*#__PURE__*/_react.default.createElement(SearchFullTimejobs, null, /*#__PURE__*/_react.default.createElement("input", {
@@ -38418,7 +38765,7 @@ exports.default = _default;
 module.exports = "/globe.66ee0b64.svg";
 },{}],"img/time.svg":[function(require,module,exports) {
 module.exports = "/time.11274d4e.svg";
-},{}],"src/containers/DisplayingListsPage.js":[function(require,module,exports) {
+},{}],"src/containers/JobsLists.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38438,49 +38785,13 @@ var _globe = _interopRequireDefault(require("../../img/globe.svg"));
 
 var _time = _interopRequireDefault(require("../../img/time.svg"));
 
+var _components = require("../components");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n     display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    max-width: 300px;\n    margin-left: auto;\n    li {\n        font-family: \"Roboto_regular\";\n        font-style: normal;\n        font-weight: 500;\n        font-size: 12px;\n        line-height: 14px;\n        color: #B9BDCF;\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        img {\n            padding-right: 10px;\n        }\n    }\n"]);
-
-  _templateObject3 = function _templateObject3() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    padding: 12px;\n    background-color: white;\n    border-radius: 8px;\n    width: 90%;\n    margin: auto;\n    margin-bottom: 23px;\n    div {\n        display: flex;\n        flex-direction: row;\n        align-items: flex-start;\n        padding-bottom: 17px;\n        img {\n            max-width: 90px;\n            border-radius: 8px;\n        }\n        ul {\n            padding-left: 16px;\n            li:nth-of-type(1) {\n                padding-bottom: 8px;\n                font-family: \"Roboto_bold\";\n                font-weight: bold;\n                font-size: 12px;\n                line-height: 14px;\n                color: #334680;\n            }\n            li:nth-of-type(2) {\n                padding-bottom: 20px;\n                font-family: \"Roboto_regular\";\n                font-weight: normal;\n                font-size: 16px;\n                line-height: 19px;\n                color: #334680;\n            }\n            li:nth-of-type(3) {\n                button {\n                    background: white;\n                    border-radius: 5px;\n                    border: 1px solid black;\n                    padding: 5px;\n                }\n            }\n        }\n    }\n\n    @media(min-width: 720px) {\n        width: 90%;\n        margin-right: 0;\n        margin-left: 7%;\n    } \n"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n     display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: space-between;\n    margin-left: 2.5%;\n    margin-right: 2.5%;\n\n    @media(min-width: 720px) {\n        margin: 0;\n    }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var ListsContainer = _styledComponents.default.div(_templateObject());
-
-var ListsDetails = _styledComponents.default.div(_templateObject2());
-
-var Location = _styledComponents.default.div(_templateObject3());
 
 function DisplayingListsPage() {
   var _useContext = (0, _react.useContext)(_context.GlobalContext),
@@ -38488,16 +38799,16 @@ function DisplayingListsPage() {
 
   var data = state.data;
   var loading = state.loading;
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, loading === true ? /*#__PURE__*/_react.default.createElement("h1", null, "Loading...") : /*#__PURE__*/_react.default.createElement(ListsContainer, null, data.map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(ListsDetails, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, loading === true ? /*#__PURE__*/_react.default.createElement("h1", null, "Loading...") : /*#__PURE__*/_react.default.createElement(_components.JobLists, null, data.map(function (item) {
+    return /*#__PURE__*/_react.default.createElement(_components.JobLists.Details, {
       key: item.id
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/".concat(item.id)
-    }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_components.JobLists.CompanyInfo, null, /*#__PURE__*/_react.default.createElement(_components.JobLists.Image, {
       src: item.company_logo
-    }), /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, item.company), /*#__PURE__*/_react.default.createElement("li", null, item.title), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("button", {
+    }), /*#__PURE__*/_react.default.createElement(_components.JobLists.Wrapper, null, /*#__PURE__*/_react.default.createElement(_components.JobLists.Company, null, item.company), /*#__PURE__*/_react.default.createElement(_components.JobLists.Title, null, item.title), /*#__PURE__*/_react.default.createElement(_components.JobLists.Button, {
       className: "fulltime_button"
-    }, item.type)))), /*#__PURE__*/_react.default.createElement(Location, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
+    }, item.type))), /*#__PURE__*/_react.default.createElement(_components.JobLists.CompanyInfo, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
       src: _globe.default,
       alt: "this is the location"
     }), " ", item.location), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
@@ -38507,21 +38818,9 @@ function DisplayingListsPage() {
   })));
 }
 
-var _default = DisplayingListsPage; // company: "Secureframe"
-// company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaXlYIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b34d3fdfa508617db088f05bd635cf8164a6dccf/logo.gif"
-// company_url: "https://secureframe.com"
-// created_at: "Fri Jan 29 01:06:58 UTC 2021"
-// description: "<p><a href="https://secureframe.com/">Secureframe</a> is on a mission to make the most powerful security simple and accessible for every organization. Getting secure can take months, slowing a company's speed-to-market and sales. We believe security -- when done right -- should accelerate innovation and growth. That's why we started Secureframe.</p>↵<p>Secureframe is backed by top VCs including <a href="https://gradient.com/">Gradient Ventures</a> (Google's AI Fund), Base10, BoxGroup, Village Global, and many more.</p>↵<p>This role can be in San Francisco or Remote. Secureframe is fully remote till at least June 2021.</p>↵<h3>What you'll do</h3>↵<ul>↵<li>Scope, design, and implement new end-to-end functionality</li>↵<li>Contribute to codebases in Ruby, Typescript, and Go</li>↵<li>Help architect core parts of our infrastructure from the ground up</li>↵<li>Work closely with designers and product managers to solve ambiguous user challenges</li>↵</ul>↵<h3>Who we're looking for</h3>↵<ul>↵<li>2+ years of experience working with modern programming languages like Ruby, Javascript, Python, etc.</li>↵<li>Strong understanding of computer science fundamentals</li>↵<li>Ability to communicate and collaborate effectively</li>↵<li>Passion and ability to work well in a fast-paced, rapidly changing environment</li>↵</ul>↵<h3>Benefits</h3>↵<ul>↵<li>Medical, dental, and vision benefits for you and your dependent(s)</li>↵<li>Unlimited PTO</li>↵<li>401(k)</li>↵<li>Paid family leave</li>↵<li>Ground floor opportunity as an early member of the team</li>↵</ul>↵<p><em>Secureframe is an equal opportunity employer. We aim to create an environment where every team member at Secureframe feels like they belong so they can have a greater impact on our business and customers. We do not discriminate on the basis of race, religion, color, national origin, gender, sexual orientation, age, marital status, veteran status, or disability status.</em></p>↵<p>Secureframe is fully remote until at least June 2021. We are committed to the health and safety of our employees and will not require employees to be in our office(s) until a vaccine is widely available.</p>↵"
-// how_to_apply: "<p><a href="https://jobs.lever.co/secureframe/020d7563-b902-4002-9a82-ee2c77d0f8c0?lever-origin=applied&amp;lever-source%5B%5D=GitHub">Apply Here</a></p>↵"
-// id: "7cbcbf10-f5ed-4f80-b2dd-7e565c9dd9af"
-// location: "San Francisco or Remote"
-// title: "Software Engineer"
-// type: "Full Time"
-// url: "https://jobs.github.com/positions/7cbcbf10-f5ed-4f80-b2dd-7e565c9dd9af"
-// __pro
-
+var _default = DisplayingListsPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context":"src/context.js","../../img/globe.svg":"img/globe.svg","../../img/time.svg":"img/time.svg"}],"src/Pages/MainLists.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context":"src/context.js","../../img/globe.svg":"img/globe.svg","../../img/time.svg":"img/time.svg","../components":"src/components/index.js"}],"src/Pages/MainLists.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38535,7 +38834,7 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _SearchPage = _interopRequireDefault(require("../containers/SearchPage"));
 
-var _DisplayingListsPage = _interopRequireDefault(require("../containers/DisplayingListsPage"));
+var _JobsLists = _interopRequireDefault(require("../containers/JobsLists"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38554,12 +38853,12 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 var Main = _styledComponents.default.main(_templateObject());
 
 function MainLists() {
-  return /*#__PURE__*/_react.default.createElement(Main, null, /*#__PURE__*/_react.default.createElement(_SearchPage.default, null), /*#__PURE__*/_react.default.createElement(_DisplayingListsPage.default, null));
+  return /*#__PURE__*/_react.default.createElement(Main, null, /*#__PURE__*/_react.default.createElement(_SearchPage.default, null), /*#__PURE__*/_react.default.createElement(_JobsLists.default, null));
 }
 
 var _default = MainLists;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../containers/SearchPage":"src/containers/SearchPage.js","../containers/DisplayingListsPage":"src/containers/DisplayingListsPage.js"}],"img/arrow_back.svg":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../containers/SearchPage":"src/containers/SearchPage.js","../containers/JobsLists":"src/containers/JobsLists.js"}],"img/arrow_back.svg":[function(require,module,exports) {
 module.exports = "/arrow_back.81d852c4.svg";
 },{}],"src/Pages/JobDetails.js":[function(require,module,exports) {
 "use strict";
@@ -38587,8 +38886,18 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _templateObject3() {
+function _templateObject4() {
   var data = _taggedTemplateLiteral(["\n    margin-left: 2.5%;\n    margin-right: 5%;\n    p {\n        font-family: \"Roboto_regular\";\n        font-weight: normal;\n        font-size: 16px;\n        line-height: 150%;\n        color: #334680;\n        padding-top: 10px;\n        padding-bottom: 10px;\n    }\n    .description_header {\n        ul {\n            display: flex;\n            flex-direction: row;\n            align-items: flex-start;\n            color: #334680;\n            font-family: \"Roboto_bold\";\n            li:first-of-type {\n                padding-right: 20px;\n                padding-bottom: 10px;\n                h2 {\n                    font-weight: bold;\n                    font-size: 24px;\n                    line-height: 28px;\n                    max-width: 400px;\n                }\n            }\n            li:nth-of-type(2) {\n                width: 100px;\n                padding: 10px;\n                border: 1px solid blue;\n                border-radius: 10px;\n                font-weight: bold;\n                font-size: 16px;\n                line-height: 14px;\n                white-space: nowrap;\n            }\n        }\n        div {\n            display: flex;\n            flex-direction: row;\n            align-items: center;\n            font-family: \"Roboto_regular\";\n            font-weight: 500;\n            font-size: 12px;\n            line-height: 14px;\n            color: #B7BCCE;\n        }\n    }\n    div:nth-of-type(2) {\n        ul {\n            display: flex;\n            flex-direction: row;\n            align-items: flex-start;\n            padding-top: 32px;\n            padding-bottom: 32px;\n            li:first-of-type {\n                padding-right: 20px;\n                img {\n                    width: 100px;\n                }\n            }\n            li:nth-of-type(2) {\n                display: flex;\n                flex-direction: column;\n                h4 {\n                    font-family: \"Roboto_bold\";\n                    padding-bottom: 10px;\n                    font-weight: bold;\n                    font-size: 24px;\n                    line-height: 21px;\n                    color: #334680;\n                    margin: 0;\n                    max-width: 200px;\n                }\n                span {\n                    font-family: \"Roboto_regular\";\n                    font-weight: 500;\n                    font-size: 12px;\n                    line-height: 14px;\n                    color: #B9BDCF;\n                }\n            }\n        }\n    }\n\n    @media(min-width: 720px) {\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        align-items: flex-start;\n        max-width: 60%;\n        margin-right: 0;\n        margin-left: auto;\n        .descriptions {\n            margin-left: 10%;\n            margin-right: 0;\n        }\n\n    }\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    padding-left: 2.5%;\n    padding-bottom: 20px;\n    font-weight: 600;\n    font-size: 16px;\n    line-height: 21px;\n    color: #1E86FF;\n"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -38598,7 +38907,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    a {\n        div {\n            display: flex;\n            flex-direction: row;\n            align-items: center;\n            padding-left: 2.5%;\n            padding-bottom: 20px;\n            font-weight: 600;\n            font-size: 16px;\n            line-height: 21px;\n            color: #1E86FF;\n        }\n    }\n    h3 {\n        font-family: \"Poppins_bold\";\n        font-weight: bold;\n        font-size: 14px;\n        line-height: 21px;\n        text-transform: uppercase;\n        color: #B9BDCF;\n        padding-left: 2.5%;\n        padding-bottom: 16px;\n    }\n    div {\n        font-family: \"Poppins_regular\";\n        font-weight: 500;\n        font-size: 16px;\n        line-height: 21px;\n        color: #334680;\n        padding-left: 2.5%;\n        padding-bottom: 36px;\n        max-width: 240px;\n        a {\n            color: #1E86FF;\n        }\n    }\n"]);
+  var data = _taggedTemplateLiteral(["\n    h3 {\n        font-family: \"Poppins_bold\";\n        font-weight: bold;\n        font-size: 14px;\n        line-height: 21px;\n        text-transform: uppercase;\n        color: #B9BDCF;\n        padding-left: 2.5%;\n        padding-bottom: 16px;\n    }\n    div {\n        font-family: \"Poppins_regular\";\n        font-weight: 500;\n        font-size: 16px;\n        line-height: 21px;\n        color: #334680;\n        padding-left: 2.5%;\n        padding-bottom: 36px;\n        max-width: 240px;\n        a {\n            color: #1E86FF;\n        }\n    }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -38623,7 +38932,9 @@ var Container = _styledComponents.default.div(_templateObject());
 
 var LinkBack = _styledComponents.default.div(_templateObject2());
 
-var Wrapper = _styledComponents.default.div(_templateObject3());
+var Goback = _styledComponents.default.div(_templateObject3());
+
+var Wrapper = _styledComponents.default.div(_templateObject4());
 
 function JobsDetails() {
   var _useContext = (0, _react.useContext)(_context.GlobalContext),
@@ -38639,7 +38950,7 @@ function JobsDetails() {
   });
   return /*#__PURE__*/_react.default.createElement(Container, null, /*#__PURE__*/_react.default.createElement(LinkBack, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/"
-  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement(Goback, null, /*#__PURE__*/_react.default.createElement("img", {
     src: _arrow_back.default,
     alt: "arrow_back"
   }), " Go back to search")), /*#__PURE__*/_react.default.createElement("h3", null, "How to Apply"), /*#__PURE__*/_react.default.createElement("div", null, "Please email a copy of your resume and online portfolio to ", /*#__PURE__*/_react.default.createElement("a", {
@@ -38665,7 +38976,7 @@ function JobsDetails() {
 
 var _default = JobsDetails;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js","../../img/arrow_back.svg":"img/arrow_back.svg","../../img/time.svg":"img/time.svg"}],"src/components/App.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js","../../img/arrow_back.svg":"img/arrow_back.svg","../../img/time.svg":"img/time.svg"}],"src/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38677,11 +38988,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _HeaderPage = _interopRequireDefault(require("../Pages/HeaderPage"));
+var _HeaderPage = _interopRequireDefault(require("./Pages/HeaderPage"));
 
-var _MainLists = _interopRequireDefault(require("../Pages/MainLists"));
+var _MainLists = _interopRequireDefault(require("./Pages/MainLists"));
 
-var _JobDetails = _interopRequireDefault(require("../Pages/JobDetails"));
+var _JobDetails = _interopRequireDefault(require("./Pages/JobDetails"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -38717,7 +39028,7 @@ function App() {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../Pages/HeaderPage":"src/Pages/HeaderPage.js","../Pages/MainLists":"src/Pages/MainLists.js","../Pages/JobDetails":"src/Pages/JobDetails.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/global-styles.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./Pages/HeaderPage":"src/Pages/HeaderPage.js","./Pages/MainLists":"src/Pages/MainLists.js","./Pages/JobDetails":"src/Pages/JobDetails.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/global-styles.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38752,14 +39063,14 @@ var _reactRouterDom = require("react-router-dom");
 
 var _context = require("./src/context");
 
-var _App = _interopRequireDefault(require("./src/components/App"));
+var _App = _interopRequireDefault(require("./src/App/"));
 
 var _globalStyles = require("./src/global-styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_context.ContextProvider, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_globalStyles.GlobalStyles, null), /*#__PURE__*/_react.default.createElement(_App.default, null))), document.getElementById("root"));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./src/context":"src/context.js","./src/components/App":"src/components/App.js","./src/global-styles":"src/global-styles.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./src/context":"src/context.js","./src/App/":"src/App.js","./src/global-styles":"src/global-styles.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -38787,7 +39098,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55726" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49966" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

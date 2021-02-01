@@ -19,6 +19,12 @@ function ContextProvider({children}) {
                     data: action.playloads,
                 }
             }
+            case 'FETCHING_FULLTIMEJOBS': {
+                return {
+                    ...state,
+                    data: action.fulltimejobs,
+                }
+            }
             case 'FETCH_FAILED' : return {
                 ...state, 
                 error : "You can try again your fetch!",
@@ -61,18 +67,33 @@ function ContextProvider({children}) {
             .catch(error => {
                 dispatch({type : "FETCH_FAILED" })
             })
-        }
-        
-        useEffect(() => {
-            handleSearchHeader();
-        }, [ state.details])
+    }
+    useEffect(() => {
+        handleSearchHeader();
+    }, [ state.details])
+
+    function handlefulltimejobs(fullTimeJobs) {
+        const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=${fullTimeJobs}`;
+        axios
+            .get(API_URL)
+            .then(response => {
+                dispatch({ type: 'FETCHING_FULLTIMEJOBS', fulltimejobs: response.data, full_time: fullTimeJobs})
+            })
+            .catch(error => {
+                dispatch({type : "FETCH_FAILED" })
+            })
+    }
+    useEffect(() => {
+        handlefulltimejobs();
+    }, [ state.fullTimeJobs])
         
         return (
             <GlobalContext.Provider 
             value={{
                 state, 
                 dispatch, 
-                handleSearchHeader
+                handleSearchHeader,
+                handlefulltimejobs
             }}>
             {children}
         </GlobalContext.Provider>

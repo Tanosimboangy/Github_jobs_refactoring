@@ -17,19 +17,6 @@ const Container = styled.div`
     }
 `;
 const LinkBack = styled.div`
-    a {
-        div {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding-left: 2.5%;
-            padding-bottom: 20px;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 21px;
-            color: #1E86FF;
-        }
-    }
     h3 {
         font-family: "Poppins_bold";
         font-weight: bold;
@@ -54,6 +41,19 @@ const LinkBack = styled.div`
         }
     }
 `;
+
+const Goback = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 2.5%;
+    padding-bottom: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    color: #1E86FF;
+`;
+
 const Wrapper = styled.div`
     margin-left: 2.5%;
     margin-right: 5%;
@@ -164,12 +164,11 @@ function JobsDetails() {
     const { detail } = useParams();
     const detailItem = data.filter(item => item.id === detail);
     
-
     return (
         <Container>
             <LinkBack>
                 <Link to="/">
-                    <div><img src={arrow_back} alt="arrow_back"/> Go back to search</div>
+                    <Goback><img src={arrow_back} alt="arrow_back"/> Go back to search</Goback>
                 </Link>
                 <h3>How to Apply</h3>
                 <div>Please email a copy of your resume and online portfolio to <a href="https://kasisto.com/">kasisto.com</a> & CC <a href="https://kasisto.com/">eric@kasisto.com</a></div>
