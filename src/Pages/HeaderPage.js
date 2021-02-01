@@ -64,13 +64,13 @@ const Button = styled.button`
 
 function HeaderPage() {
     const [description, setDescription] = useState('')
-    const {dispatch, state, handleSearch} = useContext(GlobalContext);
+    const {dispatch, state, handleSearchHeader} = useContext(GlobalContext);
 
     function handleHeaderSearch(e) {
         e.preventDefault();
         const el = e.target.inputValue.value;
         setDescription(el);
-        handleSearch(el)
+        handleSearchHeader(el)
         e.target.reset();
     }
 

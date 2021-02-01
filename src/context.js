@@ -13,7 +13,7 @@ function ContextProvider({children}) {
                     data: action.playload,
                 }
             }
-            case 'FETCHING_CITY': {
+            case 'FETCHING_DESCRIPTION': {
                 return {
                     ...state,
                     data: action.playloads,
@@ -51,12 +51,12 @@ function ContextProvider({children}) {
         fetchingData()
     }, [])
 
-    function handleSearch(details) {
+    function handleSearchHeader(details) {
         const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${details}`;
         axios
             .get(API_URL)
             .then(response => {
-                dispatch({ type: 'FETCHING_CITY', playloads: response.data, description: details})
+                dispatch({ type: 'FETCHING_DESCRIPTION', playloads: response.data, description: details})
             })
             .catch(error => {
                 dispatch({type : "FETCH_FAILED" })
@@ -64,13 +64,16 @@ function ContextProvider({children}) {
         }
         
         useEffect(() => {
-            handleSearch();
+            handleSearchHeader();
         }, [ state.details])
-
-        console.log(state.data);
         
         return (
-            <GlobalContext.Provider value={{state, dispatch, handleSearch}}>
+            <GlobalContext.Provider 
+            value={{
+                state, 
+                dispatch, 
+                handleSearchHeader
+            }}>
             {children}
         </GlobalContext.Provider>
     )

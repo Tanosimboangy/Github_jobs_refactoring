@@ -36103,7 +36103,7 @@ function ContextProvider(_ref) {
           });
         }
 
-      case 'FETCHING_CITY':
+      case 'FETCHING_DESCRIPTION':
         {
           return _objectSpread(_objectSpread({}, state), {}, {
             data: action.playloads
@@ -36151,12 +36151,12 @@ function ContextProvider(_ref) {
     fetchingData();
   }, []);
 
-  function handleSearch(details) {
+  function handleSearchHeader(details) {
     var API_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=".concat(details);
 
     _axios.default.get(API_URL).then(function (response) {
       dispatch({
-        type: 'FETCHING_CITY',
+        type: 'FETCHING_DESCRIPTION',
         playloads: response.data,
         description: details
       });
@@ -36168,14 +36168,13 @@ function ContextProvider(_ref) {
   }
 
   (0, _react.useEffect)(function () {
-    handleSearch();
+    handleSearchHeader();
   }, [state.details]);
-  console.log(state.data);
   return /*#__PURE__*/_react.default.createElement(GlobalContext.Provider, {
     value: {
       state: state,
       dispatch: dispatch,
-      handleSearch: handleSearch
+      handleSearchHeader: handleSearchHeader
     }
   }, children);
 } // const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;
@@ -38275,13 +38274,13 @@ function HeaderPage() {
   var _useContext = (0, _react.useContext)(_context.GlobalContext),
       dispatch = _useContext.dispatch,
       state = _useContext.state,
-      handleSearch = _useContext.handleSearch;
+      handleSearchHeader = _useContext.handleSearchHeader;
 
   function handleHeaderSearch(e) {
     e.preventDefault();
     var el = e.target.inputValue.value;
     setDescription(el);
-    handleSearch(el);
+    handleSearchHeader(el);
     e.target.reset();
   }
 
@@ -38788,7 +38787,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54533" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55726" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
