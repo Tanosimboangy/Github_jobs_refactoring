@@ -94,29 +94,36 @@ const Location = styled.div`
 function DisplayingListsPage() {
     const {state} = useContext(GlobalContext);
     const data = state.data;
+    const loading = state.loading;
     return (
-        <ListsContainer>
-            {data.map(item => {
-                return (
-                    <ListsDetails key={item.id}>
-                        <Link to={`/${item.id}`}>
-                            <div>
-                                <img src={item.company_logo} />
-                                <ul>
-                                    <li>{item.company}</li>
-                                    <li>{item.title}</li>
-                                    <li><button className="fulltime_button">{item.type}</button></li>
-                                </ul>
-                            </div>
-                            <Location>
-                                <li><img src={globe} alt="this is the location"/> {item.location}</li>
-                                <li><img src={time} alt="this when it is realesed"/> {item.created_at}</li>
-                            </Location>
-                        </Link>
-                    </ListsDetails>
-                )
-            })}
-        </ListsContainer>
+        <>
+        {
+            loading === true ?
+            <h1>Loading...</h1> :
+            <ListsContainer>
+                {data.map(item => {
+                    return (
+                        <ListsDetails key={item.id}>
+                            <Link to={`/${item.id}`}>
+                                <div>
+                                    <img src={item.company_logo} />
+                                    <ul>
+                                        <li>{item.company}</li>
+                                        <li>{item.title}</li>
+                                        <li><button className="fulltime_button">{item.type}</button></li>
+                                    </ul>
+                                </div>
+                                <Location>
+                                    <li><img src={globe} alt="this is the location"/> {item.location}</li>
+                                    <li><img src={time} alt="this when it is realesed"/> {item.created_at}</li>
+                                </Location>
+                            </Link>
+                        </ListsDetails>
+                    )
+                })}
+            </ListsContainer>
+        }
+        </>
     )
 }
 

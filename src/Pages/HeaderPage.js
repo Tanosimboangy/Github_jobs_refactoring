@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import styled from 'styled-components';
 import {GlobalContext} from '../context';
 
@@ -63,13 +63,16 @@ const Button = styled.button`
 `;
 
 function HeaderPage() {
-    const {dispatch, state} = useContext(GlobalContext);
+    const [city, setCity] = useState('')
+
+    const {dispatch, state, handleHeaderSubmit} = useContext(GlobalContext);
     let location = state.location;
 
     function handleHeaderSearch(e) {
         e.preventDefault();
-        const el = e.target.value;
-        location: el;
+        const el = e.target.inputValue.value;
+        setCity(el);
+        handleHeaderSubmit(el)
         e.target.reset();
     }
 

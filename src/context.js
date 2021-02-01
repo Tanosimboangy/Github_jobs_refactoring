@@ -33,6 +33,7 @@ function ContextProvider({children}) {
     },  {
         data: [ ],
         title: '',
+        description: '',
         location: '',
         fulltime: '',
         loading: true,
@@ -52,12 +53,12 @@ function ContextProvider({children}) {
     fetchingFulltimesJobsData()
     }, [])
 
-    function handleHeaderSearch() {
+    function handleHeaderSubmit(city) {
         let API = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?"
         axios
-          .get(API + `title=${location}`)
+          .get(API + `location=${city}`)
           .then(response => {
-            dispatch({ type: 'FETCHING_CITY', playloads: response.data, location: location})
+            dispatch({ type: 'FETCHING_CITY', playloads: response.data, location: city})
           })
           .catch(error => {
             dispatch({type : "FETCH_FAILED" })
@@ -65,11 +66,11 @@ function ContextProvider({children}) {
     }
 
     useEffect(() => {
-        handleHeaderSearch();
-    }, [state.description])
+        handleHeaderSubmit();
+    }, [state.description, state.location])
 
     return (
-        <GlobalContext.Provider value={{state, dispatch}}>
+        <GlobalContext.Provider value={{state, dispatch, handleHeaderSubmit}}>
             {children}
         </GlobalContext.Provider>
     )
