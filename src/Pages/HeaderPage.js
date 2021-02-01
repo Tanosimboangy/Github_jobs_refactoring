@@ -63,16 +63,14 @@ const Button = styled.button`
 `;
 
 function HeaderPage() {
-    const [city, setCity] = useState('')
-
-    const {dispatch, state, handleHeaderSubmit} = useContext(GlobalContext);
-    let location = state.location;
+    const [description, setDescription] = useState('')
+    const {dispatch, state, handleSearch} = useContext(GlobalContext);
 
     function handleHeaderSearch(e) {
         e.preventDefault();
         const el = e.target.inputValue.value;
-        setCity(el);
-        handleHeaderSubmit(el)
+        setDescription(el);
+        handleSearch(el)
         e.target.reset();
     }
 

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
+import {GlobalContext} from '../context';
 
 const Search = styled.div`
     display: flex;
@@ -26,10 +27,22 @@ const SearchFullTimejobs = styled.div`
 `;
 
 function SearchPage() {
+    const [fulltime, setFulltime] = useState("");
+    const {dispatch, state, handleSearch} = useContext(GlobalContext);
+    
+    function handleCheckbox(e) {
+        e.preventDefault();
+        const el = e.target.fulltime.value;
+        console.log(el);
+        setFulltime(true);
+        // handleSearch(true)
+        console.log("name is clicked");
+    }
+
     return (
         <Search>
             <SearchFullTimejobs>
-                <input id="fulltimejobs" type="checkbox"/>
+                <input id="fulltimejobs" value="fulltime" onChange={handleCheckbox} name="fulltime" type="checkbox"/>
                 <label htmlFor="fulltimejobs">Full time</label>
             </SearchFullTimejobs>
             <div>

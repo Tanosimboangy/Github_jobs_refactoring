@@ -16,7 +16,6 @@ function ContextProvider({children}) {
             case 'FETCHING_CITY': {
                 return {
                     ...state,
-                    description: action.description,
                     data: action.playloads,
                 }
             }
@@ -32,52 +31,53 @@ function ContextProvider({children}) {
         return state;
     },  {
         data: [ ],
-        title: '',
+        loading: true,
         description: '',
         location: '',
-        fulltime: '',
-        loading: true,
+        full_time: '',
     })
 
-    function fetchingFulltimesJobsData() {
+    function fetchingData() {
         axios
           .get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json")
-          .then(respose => {
-            dispatch({ type: 'FETCHING_DATA', playload: respose.data } )    
+          .then(res => {
+            dispatch({ type: 'FETCHING_DATA', playload: res.data } )    
           })
           .catch(error => {
             dispatch({type : "FETCH_FAILED" })
           })
     }
     useEffect(() => {
-    fetchingFulltimesJobsData()
+        fetchingData()
     }, [])
 
-    function handleHeaderSubmit(city) {
-        let API = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?"
+    function handleSearch(details) {
+        const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${details}`;
         axios
-          .get(API + `location=${city}`)
-          .then(response => {
-            dispatch({ type: 'FETCHING_CITY', playloads: response.data, location: city})
-          })
-          .catch(error => {
-            dispatch({type : "FETCH_FAILED" })
-          })
-    }
+            .get(API_URL)
+            .then(response => {
+                dispatch({ type: 'FETCHING_CITY', playloads: response.data, description: details})
+            })
+            .catch(error => {
+                dispatch({type : "FETCH_FAILED" })
+            })
+        }
+        
+        useEffect(() => {
+            handleSearch();
+        }, [ state.details])
 
-    useEffect(() => {
-        handleHeaderSubmit();
-    }, [state.description, state.location])
-
-    return (
-        <GlobalContext.Provider value={{state, dispatch, handleHeaderSubmit}}>
+        console.log(state.data);
+        
+        return (
+            <GlobalContext.Provider value={{state, dispatch, handleSearch}}>
             {children}
         </GlobalContext.Provider>
     )
 }
 
+export { GlobalContext ,ContextProvider }
 
-// useReducer(function, initialState)
 
 
-export {GlobalContext ,ContextProvider}
+// const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;

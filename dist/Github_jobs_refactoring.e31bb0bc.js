@@ -36106,7 +36106,6 @@ function ContextProvider(_ref) {
       case 'FETCHING_CITY':
         {
           return _objectSpread(_objectSpread({}, state), {}, {
-            description: action.description,
             data: action.playloads
           });
         }
@@ -36126,21 +36125,20 @@ function ContextProvider(_ref) {
     return state;
   }, {
     data: [],
-    title: '',
+    loading: true,
     description: '',
     location: '',
-    fulltime: '',
-    loading: true
+    full_time: ''
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
-  function fetchingFulltimesJobsData() {
-    _axios.default.get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json").then(function (respose) {
+  function fetchingData() {
+    _axios.default.get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json").then(function (res) {
       dispatch({
         type: 'FETCHING_DATA',
-        playload: respose.data
+        playload: res.data
       });
     }).catch(function (error) {
       dispatch({
@@ -36150,17 +36148,17 @@ function ContextProvider(_ref) {
   }
 
   (0, _react.useEffect)(function () {
-    fetchingFulltimesJobsData();
+    fetchingData();
   }, []);
 
-  function handleHeaderSubmit(city) {
-    var API = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?";
+  function handleSearch(details) {
+    var API_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=".concat(details);
 
-    _axios.default.get(API + "location=".concat(city)).then(function (response) {
+    _axios.default.get(API_URL).then(function (response) {
       dispatch({
         type: 'FETCHING_CITY',
         playloads: response.data,
-        location: city
+        description: details
       });
     }).catch(function (error) {
       dispatch({
@@ -36170,16 +36168,17 @@ function ContextProvider(_ref) {
   }
 
   (0, _react.useEffect)(function () {
-    handleHeaderSubmit();
-  }, [state.description, state.location]);
+    handleSearch();
+  }, [state.details]);
+  console.log(state.data);
   return /*#__PURE__*/_react.default.createElement(GlobalContext.Provider, {
     value: {
       state: state,
       dispatch: dispatch,
-      handleHeaderSubmit: handleHeaderSubmit
+      handleSearch: handleSearch
     }
   }, children);
-} // useReducer(function, initialState)
+} // const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;
 },{"react":"node_modules/react/index.js","axios":"node_modules/axios/index.js"}],"node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v17.0.1
  * react-is.development.js
@@ -38270,21 +38269,19 @@ var Button = _styledComponents.default.button(_templateObject4());
 function HeaderPage() {
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      city = _useState2[0],
-      setCity = _useState2[1];
+      description = _useState2[0],
+      setDescription = _useState2[1];
 
   var _useContext = (0, _react.useContext)(_context.GlobalContext),
       dispatch = _useContext.dispatch,
       state = _useContext.state,
-      handleHeaderSubmit = _useContext.handleHeaderSubmit;
-
-  var location = state.location;
+      handleSearch = _useContext.handleSearch;
 
   function handleHeaderSearch(e) {
     e.preventDefault();
     var el = e.target.inputValue.value;
-    setCity(el);
-    handleHeaderSubmit(el);
+    setDescription(el);
+    handleSearch(el);
     e.target.reset();
   }
 
@@ -38309,11 +38306,29 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _context = require("../context");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n    margin-bottom: 32px;\n    input {\n        margin-right: 12px;\n    }\n    label {\n        font-family: Poppins;\n        font-style: normal;\n        font-weight: 500;\n        font-size: 14px;\n        line-height: 21px;\n        color: #334680;\n    }\n"]);
@@ -38342,8 +38357,30 @@ var Search = _styledComponents.default.div(_templateObject());
 var SearchFullTimejobs = _styledComponents.default.div(_templateObject2());
 
 function SearchPage() {
+  var _useState = (0, _react.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      fulltime = _useState2[0],
+      setFulltime = _useState2[1];
+
+  var _useContext = (0, _react.useContext)(_context.GlobalContext),
+      dispatch = _useContext.dispatch,
+      state = _useContext.state,
+      handleSearch = _useContext.handleSearch;
+
+  function handleCheckbox(e) {
+    e.preventDefault();
+    var el = e.target.fulltime.value;
+    console.log(el);
+    setFulltime(true); // handleSearch(true)
+
+    console.log("name is clicked");
+  }
+
   return /*#__PURE__*/_react.default.createElement(Search, null, /*#__PURE__*/_react.default.createElement(SearchFullTimejobs, null, /*#__PURE__*/_react.default.createElement("input", {
     id: "fulltimejobs",
+    value: "fulltime",
+    onChange: handleCheckbox,
+    name: "fulltime",
     type: "checkbox"
   }), /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "fulltimejobs"
@@ -38378,7 +38415,7 @@ function SearchPage() {
 
 var _default = SearchPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"img/globe.svg":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js"}],"img/globe.svg":[function(require,module,exports) {
 module.exports = "/globe.66ee0b64.svg";
 },{}],"img/time.svg":[function(require,module,exports) {
 module.exports = "/time.11274d4e.svg";
@@ -38751,7 +38788,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50183" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54533" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
