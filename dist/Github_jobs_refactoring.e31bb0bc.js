@@ -36099,10 +36099,17 @@ function ContextProvider({
           };
         }
 
-      case 'FETCHING_JOBSBYLOCATION':
+      case 'FETCHING_JOBS_BY_LOCATION':
         {
           return { ...state,
             data: action.jobLocation
+          };
+        }
+
+      case 'FETCHING_JOBS_BY_SPECIFIC_LOCATION':
+        {
+          return { ...state,
+            data: action.specifiPlace
           };
         }
 
@@ -36124,7 +36131,8 @@ function ContextProvider({
     loading: true,
     description: '',
     location: '',
-    full_time: ''
+    full_time: '',
+    specificlocation: ''
   });
 
   function fetchingData() {
@@ -36165,7 +36173,7 @@ function ContextProvider({
   }, [state.details]);
 
   function handlefulltimejobs(fullTimeJobs) {
-    const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=${fullTimeJobs}`;
+    const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=true`;
 
     _axios.default.get(API_URL).then(response => {
       dispatch({
@@ -36189,7 +36197,7 @@ function ContextProvider({
 
     _axios.default.get(API_URL).then(res => {
       dispatch({
-        type: 'FETCHING_JOBSBYLOCATION',
+        type: 'FETCHING_JOBS_BY_LOCATION',
         jobLocation: res.data,
         location: locationjob
       });
@@ -36203,16 +36211,37 @@ function ContextProvider({
   (0, _react.useEffect)(() => {
     handleLocation();
   }, [state.locationjob]);
+
+  function handleSpecificLocation(specificLocation) {
+    const API_URL_LOCATION = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?location=${specificLocation}`;
+
+    _axios.default.get(API_URL_LOCATION).then(res => {
+      dispatch({
+        type: 'FETCHING_JOBS_BY_SPECIFIC_LOCATION',
+        specifiPlace: res.data,
+        specificlocation: specificLocation
+      });
+    }).catch(error => {
+      dispatch({
+        type: "FETCH_FAILED"
+      });
+    });
+  }
+
+  (0, _react.useEffect)(() => {
+    handleSpecificLocation();
+  }, [state.specificLocation]);
   return /*#__PURE__*/_react.default.createElement(GlobalContext.Provider, {
     value: {
       state,
       dispatch,
       handleSearchHeader,
       handlefulltimejobs,
-      handleLocation
+      handleLocation,
+      handleSpecificLocation
     }
   }, children);
-} // const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;
+}
 },{"react":"node_modules/react/index.js","axios":"node_modules/axios/index.js"}],"node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v17.0.1
  * react-is.development.js
@@ -38482,7 +38511,9 @@ JobLists.Img = function JobListsImg({ ...restProps
 }) {
   return /*#__PURE__*/_react.default.createElement(_JobLists.Img, restProps);
 };
-},{"react":"node_modules/react/index.js","./styles/JobLists":"src/components/JobLists/styles/JobLists.js"}],"src/components/JobsDetails/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./styles/JobLists":"src/components/JobLists/styles/JobLists.js"}],"src/components/SearchPage/index.js":[function(require,module,exports) {
+
+},{}],"src/components/JobsDetails/index.js":[function(require,module,exports) {
 
 },{}],"src/components/index.js":[function(require,module,exports) {
 "use strict";
@@ -38502,6 +38533,12 @@ Object.defineProperty(exports, "JobLists", {
     return _JobLists.default;
   }
 });
+Object.defineProperty(exports, "SearchPage", {
+  enumerable: true,
+  get: function () {
+    return _SearchPage.default;
+  }
+});
 Object.defineProperty(exports, "JobsDetails", {
   enumerable: true,
   get: function () {
@@ -38513,10 +38550,12 @@ var _header = _interopRequireDefault(require("./header"));
 
 var _JobLists = _interopRequireDefault(require("./JobLists"));
 
+var _SearchPage = _interopRequireDefault(require("./SearchPage"));
+
 var _JobsDetails = _interopRequireDefault(require("./JobsDetails"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./header":"src/components/header/index.js","./JobLists":"src/components/JobLists/index.js","./JobsDetails":"src/components/JobsDetails/index.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
+},{"./header":"src/components/header/index.js","./JobLists":"src/components/JobLists/index.js","./SearchPage":"src/components/SearchPage/index.js","./JobsDetails":"src/components/JobsDetails/index.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38573,53 +38612,35 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _styledComponents = _interopRequireDefault(require("styled-components"));
-
 var _context = require("../context");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const Search = _styledComponents.default.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 95%;
-    margin-left: 5%;
-    margin-right: auto;
-    margin-bottom: 23px;
-`;
-const SearchFullTimejobs = _styledComponents.default.div`
-    margin-bottom: 32px;
-`;
-const Input = _styledComponents.default.input`
-    margin-right: 12px;
-`;
-const Label = _styledComponents.default.label`
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 21px;
-    color: #334680;
-`;
-
 function SearchPage() {
   const {
-    state,
     handlefulltimejobs,
-    handleLocation
+    handleLocation,
+    handleSpecificLocation
   } = (0, _react.useContext)(_context.GlobalContext);
+  const [checked, setChecked] = (0, _react.useState)(false);
 
   function handleCheckbox(e) {
-    handlefulltimejobs(e.target.value);
+    setChecked(!checked);
+
+    if (checked) {
+      handlefulltimejobs(e.target.value);
+    }
   }
 
   function handleJobsLocation(e) {
     handleLocation(e.target.value);
+  }
+
+  function handleChange(e) {
+    console.log(e.target.value);
+    handleSpecificLocation(e.target.value);
   }
 
   return /*#__PURE__*/_react.default.createElement(Search, null, /*#__PURE__*/_react.default.createElement(SearchFullTimejobs, null, /*#__PURE__*/_react.default.createElement(Input, {
@@ -38630,39 +38651,47 @@ function SearchPage() {
     type: "checkbox"
   }), /*#__PURE__*/_react.default.createElement(Label, {
     htmlFor: "fulltimejobs"
-  }, "Full time")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
+  }, "Full time")), /*#__PURE__*/_react.default.createElement(Container, null, /*#__PURE__*/_react.default.createElement(InputLabel, {
     htmlFor: "location"
-  }, "LOCATION"), /*#__PURE__*/_react.default.createElement("input", {
+  }, "LOCATION"), /*#__PURE__*/_react.default.createElement(InputLocation, {
     type: "text",
     id: "location",
     onChange: handleJobsLocation,
     placeholder: "City, state, zip code or country"
-  }), /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+  }), /*#__PURE__*/_react.default.createElement(Wrapper, null, /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
     id: "london",
-    type: "radio"
-  }), /*#__PURE__*/_react.default.createElement("label", {
+    type: "checkbox",
+    onChange: handleChange,
+    value: "London"
+  }), /*#__PURE__*/_react.default.createElement(Label, {
     htmlFor: "london"
-  }, "London")), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+  }, "London")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
     id: "Amsterdam",
-    type: "radio"
-  }), /*#__PURE__*/_react.default.createElement("label", {
+    type: "checkbox",
+    onChange: handleChange,
+    value: "Amsterdam"
+  }), /*#__PURE__*/_react.default.createElement(Label, {
     htmlFor: "Amsterdam"
-  }, "Amsterdam")), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+  }, "Amsterdam")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
     id: "New Work",
-    type: "radio"
-  }), /*#__PURE__*/_react.default.createElement("label", {
+    type: "checkbox",
+    onChange: handleChange,
+    value: "New work"
+  }), /*#__PURE__*/_react.default.createElement(Label, {
     htmlFor: "New Work"
-  }, "New Work")), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+  }, "New Work")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
     id: "Berlin",
-    type: "radio"
-  }), /*#__PURE__*/_react.default.createElement("label", {
+    type: "checkbox",
+    onChange: handleChange,
+    value: "Berlin"
+  }), /*#__PURE__*/_react.default.createElement(Label, {
     htmlFor: "Berlin"
   }, "Berlin")))));
 }
 
 var _default = SearchPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../context":"src/context.js"}],"img/globe.svg":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../context":"src/context.js"}],"img/globe.svg":[function(require,module,exports) {
 module.exports = "/globe.66ee0b64.svg";
 },{}],"img/time.svg":[function(require,module,exports) {
 module.exports = "/time.11274d4e.svg";
@@ -39104,7 +39133,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59252" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60370" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

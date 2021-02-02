@@ -1,76 +1,60 @@
 import React, {useState, useContext} from 'react';
-import styled from 'styled-components';
 import {GlobalContext} from '../context';
-
-const Search = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 95%;
-    margin-left: 5%;
-    margin-right: auto;
-    margin-bottom: 23px;
-`;
-const SearchFullTimejobs = styled.div`
-    margin-bottom: 32px;
-`;
-
-const Input = styled.input`
-    margin-right: 12px;
-`;
-const Label = styled.label`
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 21px;
-    color: #334680;
-`;
+import { Search } from '../components';
 
 function SearchPage() {
-    const {state, handlefulltimejobs, handleLocation} = useContext(GlobalContext);
+    const {handlefulltimejobs, handleLocation, handleSpecificLocation} = useContext(GlobalContext);
+    const [checked, setChecked] = useState(false);
     
     function handleCheckbox(e) {
-        handlefulltimejobs( e.target.value);
+        setChecked(!checked)
+        if (checked) {
+            handlefulltimejobs( e.target.value);
+        }
     }
 
     function handleJobsLocation(e) {
         handleLocation( e.target.value);
     }
 
+    function handleChange(e) {
+        console.log(e.target.value);
+        handleSpecificLocation(e.target.value)
+    }
+
     return (
         <Search>
-            <SearchFullTimejobs>
-                <Input 
+            <Search.SearchFullTimejobs>
+                <Search.Input 
                     id="fulltimejobs" 
                     value="fulltime" 
                     onChange={handleCheckbox} 
                     name="fulltime" 
                     type="checkbox"/>
-                <Label htmlFor="fulltimejobs">Full time</Label>
-            </SearchFullTimejobs>
-            <div>
-                <label htmlFor="location">LOCATION</label>
-                <input type="text" id="location" onChange={handleJobsLocation} placeholder="City, state, zip code or country"/>
-                <ul>
-                    <li>
-                        <input id="london" type="radio"/>
-                        <label htmlFor="london">London</label>
-                    </li>
-                    <li>
-                        <input id="Amsterdam" type="radio"/>
-                        <label htmlFor="Amsterdam">Amsterdam</label>
-                    </li>
-                    <li>
-                        <input id="New Work" type="radio"/>
-                        <label htmlFor="New Work">New Work</label>
-                    </li>
-                    <li>
-                        <input id="Berlin" type="radio"/>
-                        <label htmlFor="Berlin">Berlin</label>
-                    </li>
-                </ul>
-            </div>
+                <Search.Label htmlFor="fulltimejobs">Full time</Search.Label>
+            </Search.SearchFullTimejobs>
+            <Search.Container>
+                <Search.InputLabel htmlFor="location">LOCATION</Search.InputLabel>
+                <Search.InputLocation type="text" id="location" onChange={handleJobsLocation} placeholder="City, state, zip code or country"/>
+                <Search.Wrapper>
+                    <Search.Subwrapper>
+                        <Search.Input id="london" type="checkbox" onChange={handleChange} value="London"/>
+                        <Search.Label htmlFor="london">London</Search.Label>
+                    </Search.Subwrapper>
+                    <Search.Subwrapper>
+                        <Search.Input id="Amsterdam" type="checkbox" onChange={handleChange} value="Amsterdam"/>
+                        <Search.Label htmlFor="Amsterdam">Amsterdam</Search.Label>
+                    </Search.Subwrapper>
+                    <Search.Subwrapper>
+                        <Search.Input id="New Work" type="checkbox" onChange={handleChange} value="New work"/>
+                        <Search.Label htmlFor="New Work">New Work</Search.Label>
+                    </Search.Subwrapper>
+                    <Search.Subwrapper>
+                        <Search.Input id="Berlin" type="checkbox" onChange={handleChange} value="Berlin"/>
+                        <Search.Label htmlFor="Berlin">Berlin</Search.Label>
+                    </Search.Subwrapper>
+                </Search.Wrapper>
+            </Search.Container>
         </Search>
     )
 }

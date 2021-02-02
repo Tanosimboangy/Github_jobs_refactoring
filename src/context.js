@@ -25,10 +25,16 @@ function ContextProvider({children}) {
                     data: action.fulltimejobs,
                 }
             }
-            case 'FETCHING_JOBSBYLOCATION': {
+            case 'FETCHING_JOBS_BY_LOCATION': {
                 return {
                     ...state,
                     data: action.jobLocation,
+                }
+            }
+            case 'FETCHING_JOBS_BY_SPECIFIC_LOCATION': {
+                return {
+                    ...state,
+                    data: action.specifiPlace,
                 }
             }
             case 'FETCH_FAILED' : return {
@@ -47,6 +53,7 @@ function ContextProvider({children}) {
         description: '',
         location: '',
         full_time: '',
+        specificlocation: ''
     })
 
     function fetchingData() {
@@ -79,7 +86,7 @@ function ContextProvider({children}) {
     }, [ state.details])
 
     function handlefulltimejobs(fullTimeJobs) {
-        const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=${fullTimeJobs}`;
+        const API_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?full_time=true`;
         axios
             .get(API_URL)
             .then(response => {
@@ -98,7 +105,7 @@ function ContextProvider({children}) {
         axios
             .get(API_URL)
             .then(res => {
-                dispatch({ type: 'FETCHING_JOBSBYLOCATION', jobLocation: res.data, location: locationjob})
+                dispatch({ type: 'FETCHING_JOBS_BY_LOCATION', jobLocation: res.data, location: locationjob})
             })
             .catch(error => {
                 dispatch({type : "FETCH_FAILED" })
@@ -107,6 +114,21 @@ function ContextProvider({children}) {
     useEffect(() => {
         handleLocation();
     }, [state.locationjob])
+
+    function handleSpecificLocation(specificLocation) {
+        const API_URL_LOCATION = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?location=${specificLocation}`;
+        axios
+            .get(API_URL_LOCATION)
+            .then(res => {
+                dispatch({ type: 'FETCHING_JOBS_BY_SPECIFIC_LOCATION', specifiPlace: res.data, specificlocation: specificLocation})
+            })
+            .catch(error => {
+                dispatch({type : "FETCH_FAILED" })
+            })
+    }
+    useEffect(() => {
+        handleSpecificLocation();
+    }, [state.specificLocation])
         
         return (
             <GlobalContext.Provider 
@@ -116,6 +138,7 @@ function ContextProvider({children}) {
                 handleSearchHeader,
                 handlefulltimejobs,
                 handleLocation,
+                handleSpecificLocation,
             }}>
             {children}
         </GlobalContext.Provider>
@@ -123,7 +146,3 @@ function ContextProvider({children}) {
 }
 
 export { GlobalContext ,ContextProvider }
-
-
-
-// const API_URL = `https://jobs.github.com/positions.json?description=${description}&location=${location}&full_time=${fulltime}`;
