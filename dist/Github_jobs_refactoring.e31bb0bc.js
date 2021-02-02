@@ -38782,6 +38782,7 @@ function SearchPage() {
     handleSpecificLocation
   } = (0, _react.useContext)(_context.GlobalContext);
   const [checked, setChecked] = (0, _react.useState)(false);
+  const [location, setLocation] = (0, _react.useState)('');
 
   function handleCheckbox(e) {
     setChecked(!checked);
@@ -38792,7 +38793,10 @@ function SearchPage() {
   }
 
   function handleJobsLocation(e) {
-    handleLocation(e.target.value);
+    const el = e.target.value;
+    setLocation(el);
+    handleLocation(location);
+    console.log(el);
   }
 
   return /*#__PURE__*/_react.default.createElement(_components.Search, null, /*#__PURE__*/_react.default.createElement(_components.Search.FullTimejobs, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
@@ -38813,8 +38817,8 @@ function SearchPage() {
   }), /*#__PURE__*/_react.default.createElement(_components.Search.Wrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "london",
     type: "radio",
-    checked: location === "london",
-    onChange: handleLocation,
+    checked: location === "London",
+    onChange: handleJobsLocation,
     value: "London"
   }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "london"
@@ -38822,15 +38826,15 @@ function SearchPage() {
     id: "Amsterdam",
     type: "radio",
     checked: location === "Amsterdam",
-    onChange: handleLocation,
+    onChange: handleJobsLocation,
     value: "Amsterdam"
   }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
-    htmlFor: "Amsterdam"
+    htmlFor: "amsterdam"
   }, "Amsterdam")), /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
-    id: "New Work",
+    id: "New \r Work",
     type: "radio",
     checked: location === "New work",
-    onChange: handleLocation,
+    onChange: handleJobsLocation,
     value: "New work"
   }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "New Work"
@@ -38838,7 +38842,7 @@ function SearchPage() {
     id: "Berlin",
     type: "radio",
     checked: location === "Berlin",
-    onChange: handleLocation,
+    onChange: handleJobsLocation,
     value: "Berlin"
   }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "Berlin"
@@ -39282,7 +39286,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64345" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64951" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
