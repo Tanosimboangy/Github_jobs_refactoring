@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Search = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -13,13 +13,13 @@ const Search = styled.div`
         margin-left: 0;
     }
 `;
-const SearchFullTimejobs = styled.div`
+export const FullTimejobs = styled.div`
     margin-bottom: 32px;
 `;
-const Input = styled.input`
+export const Input = styled.input`
     margin-right: 12px;
 `;
-const Label = styled.label`
+export const Label = styled.label`
     font-family: Poppins;
     font-style: normal;
     font-weight: 500;
@@ -27,11 +27,11 @@ const Label = styled.label`
     line-height: 21px;
     color: #334680;
 `;
-const Container = styled.div`
+export const Containers = styled.div`
     display: flex;
     flex-direction: column;
 `;
-const InputLabel = styled.label`
+export const InputLabel = styled.label`
     font-family: Poppins;
     font-style: normal;
     font-weight: bold;
@@ -41,7 +41,7 @@ const InputLabel = styled.label`
     color: #B9BDCF;
     margin-bottom: 14px;
 `;
-const InputLocation = styled.input`
+export const InputLocation = styled.input`
     background: #FFFFFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
     border-radius: 4px;
@@ -50,18 +50,17 @@ const InputLocation = styled.input`
     font-weight: normal;
     font-size: 16px;
     line-height: 14px;
-    color: #B9BDCF;
+    color: #45495e;
     padding: 17px 30px;
     border: none;
     outline: none;
-    width: 100%;
     margin-bottom: 24.5px;
 `;
-const Wrapper = styled.ul`
+export const Wrapper = styled.ul`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 `;
-const Subwrapper = styled.li`
+export const Subwrapper = styled.li`
     margin-bottom: 16px;
 `;

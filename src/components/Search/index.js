@@ -1,22 +1,22 @@
 import React from 'react';
 import {    
-    Search,
-    SearchFullTimejobs,
+    Container,
+    FullTimejobs,
     Input,
     Label,
-    Container,
+    Containers,
     InputLabel,
     InputLocation,
     Wrapper,
     Subwrapper,
-} from './styles/header';
+} from './styles/Search';
 
 export default function Search({children, ...restProps }) {
 	return <Container {...restProps}>{children}</Container>;
 }
 
-Search.SearchFullTimejobs = function SearchSearchFullTimejobs({ children, ...restProps }) {
-    return <SearchFullTimejobs {...restProps}>{children}</SearchFullTimejobs>;
+Search.FullTimejobs = function SearchFullTimejobs({ children, ...restProps }) {
+    return <FullTimejobs {...restProps}>{children}</FullTimejobs>;
 };
 
 Search.Input = function SearchInput({...restProps }) {
@@ -27,8 +27,8 @@ Search.Label = function SearchLabel({children, ...restProps }) {
     return <Label {...restProps}>{children}</Label>;
 };
 
-Search.Container = function SearchContainer({children, ...restProps }) {
-    return <Container {...restProps}>{children}</Container>;
+Search.Containers = function SearchContainers({children, ...restProps }) {
+    return <Containers {...restProps}>{children}</Containers>;
 };
 
 Search.InputLabel = function SearchInputLabel({children, ...restProps }) {

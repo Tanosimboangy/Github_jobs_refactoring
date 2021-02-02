@@ -38511,9 +38511,164 @@ JobLists.Img = function JobListsImg({ ...restProps
 }) {
   return /*#__PURE__*/_react.default.createElement(_JobLists.Img, restProps);
 };
-},{"react":"node_modules/react/index.js","./styles/JobLists":"src/components/JobLists/styles/JobLists.js"}],"src/components/SearchPage/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./styles/JobLists":"src/components/JobLists/styles/JobLists.js"}],"src/components/Search/styles/Search.js":[function(require,module,exports) {
+"use strict";
 
-},{}],"src/components/JobsDetails/index.js":[function(require,module,exports) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Subwrapper = exports.Wrapper = exports.InputLocation = exports.InputLabel = exports.Containers = exports.Label = exports.Input = exports.FullTimejobs = exports.Container = void 0;
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Container = _styledComponents.default.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 95%;
+    margin-left: 5%;
+    margin-right: auto;
+    margin-bottom: 23px;
+
+    @media(min-width: 720px) {
+        margin-left: 0;
+    }
+`;
+exports.Container = Container;
+const FullTimejobs = _styledComponents.default.div`
+    margin-bottom: 32px;
+`;
+exports.FullTimejobs = FullTimejobs;
+const Input = _styledComponents.default.input`
+    margin-right: 12px;
+`;
+exports.Input = Input;
+const Label = _styledComponents.default.label`
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #334680;
+`;
+exports.Label = Label;
+const Containers = _styledComponents.default.div`
+    display: flex;
+    flex-direction: column;
+`;
+exports.Containers = Containers;
+const InputLabel = _styledComponents.default.label`
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: #B9BDCF;
+    margin-bottom: 14px;
+`;
+exports.InputLabel = InputLabel;
+const InputLocation = _styledComponents.default.input`
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    /* font-family: Roboto; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 14px;
+    color: #45495e;
+    padding: 17px 30px;
+    border: none;
+    outline: none;
+    margin-bottom: 24.5px;
+`;
+exports.InputLocation = InputLocation;
+const Wrapper = _styledComponents.default.ul`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`;
+exports.Wrapper = Wrapper;
+const Subwrapper = _styledComponents.default.li`
+    margin-bottom: 16px;
+`;
+exports.Subwrapper = Subwrapper;
+},{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"src/components/Search/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Search;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Search = require("./styles/Search");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Search({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Container, restProps, children);
+}
+
+Search.FullTimejobs = function SearchFullTimejobs({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.FullTimejobs, restProps, children);
+};
+
+Search.Input = function SearchInput({ ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Input, restProps);
+};
+
+Search.Label = function SearchLabel({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Label, restProps, children);
+};
+
+Search.Containers = function SearchContainers({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Containers, restProps, children);
+};
+
+Search.InputLabel = function SearchInputLabel({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.InputLabel, restProps, children);
+};
+
+Search.InputLocation = function SearchInputLocation({ ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.InputLocation, restProps);
+};
+
+Search.Wrapper = function SearchWrapper({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Wrapper, restProps, children);
+};
+
+Search.Subwrapper = function SearchSubwrapper({
+  children,
+  ...restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_Search.Subwrapper, restProps, children);
+};
+},{"react":"node_modules/react/index.js","./styles/Search":"src/components/Search/styles/Search.js"}],"src/components/JobsDetails/index.js":[function(require,module,exports) {
 
 },{}],"src/components/index.js":[function(require,module,exports) {
 "use strict";
@@ -38533,10 +38688,10 @@ Object.defineProperty(exports, "JobLists", {
     return _JobLists.default;
   }
 });
-Object.defineProperty(exports, "SearchPage", {
+Object.defineProperty(exports, "Search", {
   enumerable: true,
   get: function () {
-    return _SearchPage.default;
+    return _Search.default;
   }
 });
 Object.defineProperty(exports, "JobsDetails", {
@@ -38550,12 +38705,12 @@ var _header = _interopRequireDefault(require("./header"));
 
 var _JobLists = _interopRequireDefault(require("./JobLists"));
 
-var _SearchPage = _interopRequireDefault(require("./SearchPage"));
+var _Search = _interopRequireDefault(require("./Search"));
 
 var _JobsDetails = _interopRequireDefault(require("./JobsDetails"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./header":"src/components/header/index.js","./JobLists":"src/components/JobLists/index.js","./SearchPage":"src/components/SearchPage/index.js","./JobsDetails":"src/components/JobsDetails/index.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
+},{"./header":"src/components/header/index.js","./JobLists":"src/components/JobLists/index.js","./Search":"src/components/Search/index.js","./JobsDetails":"src/components/JobsDetails/index.js"}],"src/Pages/HeaderPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38614,6 +38769,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _context = require("../context");
 
+var _components = require("../components");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -38638,60 +38795,59 @@ function SearchPage() {
     handleLocation(e.target.value);
   }
 
-  function handleChange(e) {
-    console.log(e.target.value);
-    handleSpecificLocation(e.target.value);
-  }
-
-  return /*#__PURE__*/_react.default.createElement(Search, null, /*#__PURE__*/_react.default.createElement(SearchFullTimejobs, null, /*#__PURE__*/_react.default.createElement(Input, {
+  return /*#__PURE__*/_react.default.createElement(_components.Search, null, /*#__PURE__*/_react.default.createElement(_components.Search.FullTimejobs, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "fulltimejobs",
     value: "fulltime",
     onChange: handleCheckbox,
     name: "fulltime",
     type: "checkbox"
-  }), /*#__PURE__*/_react.default.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "fulltimejobs"
-  }, "Full time")), /*#__PURE__*/_react.default.createElement(Container, null, /*#__PURE__*/_react.default.createElement(InputLabel, {
+  }, "Full time")), /*#__PURE__*/_react.default.createElement(_components.Search.Containers, null, /*#__PURE__*/_react.default.createElement(_components.Search.InputLabel, {
     htmlFor: "location"
-  }, "LOCATION"), /*#__PURE__*/_react.default.createElement(InputLocation, {
+  }, "LOCATION"), /*#__PURE__*/_react.default.createElement(_components.Search.InputLocation, {
     type: "text",
     id: "location",
     onChange: handleJobsLocation,
     placeholder: "City, state, zip code or country"
-  }), /*#__PURE__*/_react.default.createElement(Wrapper, null, /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Wrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "london",
-    type: "checkbox",
-    onChange: handleChange,
+    type: "radio",
+    checked: location === "london",
+    onChange: handleLocation,
     value: "London"
-  }), /*#__PURE__*/_react.default.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "london"
-  }, "London")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
+  }, "London")), /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "Amsterdam",
-    type: "checkbox",
-    onChange: handleChange,
+    type: "radio",
+    checked: location === "Amsterdam",
+    onChange: handleLocation,
     value: "Amsterdam"
-  }), /*#__PURE__*/_react.default.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "Amsterdam"
-  }, "Amsterdam")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
+  }, "Amsterdam")), /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "New Work",
-    type: "checkbox",
-    onChange: handleChange,
+    type: "radio",
+    checked: location === "New work",
+    onChange: handleLocation,
     value: "New work"
-  }), /*#__PURE__*/_react.default.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "New Work"
-  }, "New Work")), /*#__PURE__*/_react.default.createElement(Subwrapper, null, /*#__PURE__*/_react.default.createElement(Input, {
+  }, "New Work")), /*#__PURE__*/_react.default.createElement(_components.Search.Subwrapper, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
     id: "Berlin",
-    type: "checkbox",
-    onChange: handleChange,
+    type: "radio",
+    checked: location === "Berlin",
+    onChange: handleLocation,
     value: "Berlin"
-  }), /*#__PURE__*/_react.default.createElement(Label, {
+  }), /*#__PURE__*/_react.default.createElement(_components.Search.Label, {
     htmlFor: "Berlin"
   }, "Berlin")))));
 }
 
 var _default = SearchPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../context":"src/context.js"}],"img/globe.svg":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../context":"src/context.js","../components":"src/components/index.js"}],"img/globe.svg":[function(require,module,exports) {
 module.exports = "/globe.66ee0b64.svg";
 },{}],"img/time.svg":[function(require,module,exports) {
 module.exports = "/time.11274d4e.svg";
@@ -38704,8 +38860,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
-
-var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _reactRouterDom = require("react-router-dom");
 
@@ -38750,7 +38904,7 @@ function DisplayingListsPage() {
 
 var _default = DisplayingListsPage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context":"src/context.js","../../img/globe.svg":"img/globe.svg","../../img/time.svg":"img/time.svg","../components":"src/components/index.js"}],"src/Pages/MainLists.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context":"src/context.js","../../img/globe.svg":"img/globe.svg","../../img/time.svg":"img/time.svg","../components":"src/components/index.js"}],"src/Pages/MainLists.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39040,12 +39194,7 @@ function App() {
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Heading, null, /*#__PURE__*/_react.default.createElement("b", null, "Github"), " Jobs"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/"
-  }, /*#__PURE__*/_react.default.createElement(_HeaderPage.default // data={data} 
-  // dispatch={dispatch}
-  , null), /*#__PURE__*/_react.default.createElement(_MainLists.default // data={data} 
-  // dispatch={dispatch}
-  // loading={loading}
-  , null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+  }, /*#__PURE__*/_react.default.createElement(_HeaderPage.default, null), /*#__PURE__*/_react.default.createElement(_MainLists.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     path: "/:detail"
   }, /*#__PURE__*/_react.default.createElement(_JobDetails.default, null))));
 }
@@ -39133,7 +39282,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60370" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64345" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

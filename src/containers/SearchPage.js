@@ -17,14 +17,9 @@ function SearchPage() {
         handleLocation( e.target.value);
     }
 
-    function handleChange(e) {
-        console.log(e.target.value);
-        handleSpecificLocation(e.target.value)
-    }
-
     return (
         <Search>
-            <Search.SearchFullTimejobs>
+            <Search.FullTimejobs>
                 <Search.Input 
                     id="fulltimejobs" 
                     value="fulltime" 
@@ -32,29 +27,29 @@ function SearchPage() {
                     name="fulltime" 
                     type="checkbox"/>
                 <Search.Label htmlFor="fulltimejobs">Full time</Search.Label>
-            </Search.SearchFullTimejobs>
-            <Search.Container>
+            </Search.FullTimejobs>
+            <Search.Containers>
                 <Search.InputLabel htmlFor="location">LOCATION</Search.InputLabel>
                 <Search.InputLocation type="text" id="location" onChange={handleJobsLocation} placeholder="City, state, zip code or country"/>
                 <Search.Wrapper>
                     <Search.Subwrapper>
-                        <Search.Input id="london" type="checkbox" onChange={handleChange} value="London"/>
+                        <Search.Input id="london" type="radio" checked={location === "london"} onChange={handleLocation} value="London"/>
                         <Search.Label htmlFor="london">London</Search.Label>
                     </Search.Subwrapper>
                     <Search.Subwrapper>
-                        <Search.Input id="Amsterdam" type="checkbox" onChange={handleChange} value="Amsterdam"/>
+                        <Search.Input id="Amsterdam" type="radio" checked={location === "Amsterdam"} onChange={handleLocation} value="Amsterdam"/>
                         <Search.Label htmlFor="Amsterdam">Amsterdam</Search.Label>
                     </Search.Subwrapper>
                     <Search.Subwrapper>
-                        <Search.Input id="New Work" type="checkbox" onChange={handleChange} value="New work"/>
+                        <Search.Input id="New Work" type="radio" checked={location === "New work"} onChange={handleLocation} value="New work"/>
                         <Search.Label htmlFor="New Work">New Work</Search.Label>
                     </Search.Subwrapper>
                     <Search.Subwrapper>
-                        <Search.Input id="Berlin" type="checkbox" onChange={handleChange} value="Berlin"/>
+                        <Search.Input id="Berlin" type="radio" checked={location === "Berlin"} onChange={handleLocation} value="Berlin"/>
                         <Search.Label htmlFor="Berlin">Berlin</Search.Label>
                     </Search.Subwrapper>
                 </Search.Wrapper>
-            </Search.Container>
+            </Search.Containers>
         </Search>
     )
 }

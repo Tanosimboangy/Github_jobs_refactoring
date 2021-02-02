@@ -20,15 +20,8 @@ function App() {
             <Heading><b>Github</b> Jobs</Heading>
             <Switch>
                 <Route exact path="/">
-                    <HeaderPage 
-                        // data={data} 
-                        // dispatch={dispatch}
-                        />
-                    <MainLists 
-                        // data={data} 
-                        // dispatch={dispatch}
-                        // loading={loading}
-                    />
+                    <HeaderPage />
+                    <MainLists />
                 </Route>
                 <Route path="/:detail">
                     <JobDetails/>
