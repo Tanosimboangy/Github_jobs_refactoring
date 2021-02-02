@@ -18,7 +18,7 @@ function DisplayingListsPage() {
             <JobLists>
                 {data.map(item => {
                     return (
-                        <JobLists.Details key={item.id}>
+                        <JobLists.Lists key={item.id}>
                             <Link to={`/${item.id}`}>
                                 <JobLists.CompanyInfo>
                                     <JobLists.Image src={item.company_logo} />
@@ -28,12 +28,16 @@ function DisplayingListsPage() {
                                         <JobLists.Button className="fulltime_button">{item.type}</JobLists.Button>
                                     </JobLists.Wrapper>
                                 </JobLists.CompanyInfo>
-                                <JobLists.CompanyInfo>
-                                    <li><img src={globe} alt="this is the location"/> {item.location}</li>
-                                    <li><img src={time} alt="this when it is realesed"/> {item.created_at}</li>
-                                </JobLists.CompanyInfo>
+                                <JobLists.Location>
+                                    <JobLists.ImageContainer>
+                                        <JobLists.Img src={globe} alt="this is the location"/> {item.location}
+                                    </JobLists.ImageContainer>
+                                    <JobLists.ImageContainer>
+                                        <JobLists.Img src={time} alt="this when it is realesed"/> {item.created_at}
+                                    </JobLists.ImageContainer>
+                                </JobLists.Location>
                             </Link>
-                        </JobLists.Details>
+                        </JobLists.Lists>
                     )
                 })}
             </JobLists>

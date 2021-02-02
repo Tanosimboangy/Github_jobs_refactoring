@@ -13,40 +13,45 @@ const Search = styled.div`
 `;
 const SearchFullTimejobs = styled.div`
     margin-bottom: 32px;
-    input {
-        margin-right: 12px;
-    }
-    label {
-        font-family: Poppins;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 21px;
-        color: #334680;
-    }
+`;
+
+const Input = styled.input`
+    margin-right: 12px;
+`;
+const Label = styled.label`
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #334680;
 `;
 
 function SearchPage() {
-    const [fulltime, setFulltime] = useState(false);
-    const {dispatch, state, handlefulltimejobs} = useContext(GlobalContext);
+    const {state, handlefulltimejobs, handleLocation} = useContext(GlobalContext);
     
     function handleCheckbox(e) {
-        e.preventDefault();
-        const el = e.target.value;
-        console.log(el);
-        setFulltime(el);
-        handlefulltimejobs(el);
+        handlefulltimejobs( e.target.value);
+    }
+
+    function handleJobsLocation(e) {
+        handleLocation( e.target.value);
     }
 
     return (
         <Search>
             <SearchFullTimejobs>
-                <input id="fulltimejobs" value="fulltime" onChange={handleCheckbox} name="fulltime" type="checkbox"/>
-                <label htmlFor="fulltimejobs">Full time</label>
+                <Input 
+                    id="fulltimejobs" 
+                    value="fulltime" 
+                    onChange={handleCheckbox} 
+                    name="fulltime" 
+                    type="checkbox"/>
+                <Label htmlFor="fulltimejobs">Full time</Label>
             </SearchFullTimejobs>
             <div>
                 <label htmlFor="location">LOCATION</label>
-                <input type="text" id="location" placeholder="City, state, zip code or country"/>
+                <input type="text" id="location" onChange={handleJobsLocation} placeholder="City, state, zip code or country"/>
                 <ul>
                     <li>
                         <input id="london" type="radio"/>

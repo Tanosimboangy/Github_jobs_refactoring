@@ -12,7 +12,7 @@ export const Container = styled.div`
         margin: 0;
     }
 `;
-export const Details = styled.div`
+export const Lists = styled.div`
     padding: 12px;
     background-color: white;
     border-radius: 8px;
@@ -25,7 +25,6 @@ export const Details = styled.div`
         margin-left: 7%;
     } 
 `;
-
 export const CompanyInfo = styled.div`
     display: flex;
     flex-direction: row;
@@ -61,26 +60,25 @@ export const Button = styled.button`
     border: 1px solid black;
     padding: 5px;
 `;
-
 export const Location = styled.div`
-     display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     max-width: 300px;
     margin-left: auto;
-    li {
-        font-family: "Roboto_regular";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
-        color: #B9BDCF;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        img {
-            padding-right: 10px;
-        }
-    }
+`;
+export const ImageContainer = styled.li`
+    font-family: "Roboto_regular";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #7f818b;;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+export const Img = styled.img`
+    padding-right: 10px;
 `;
