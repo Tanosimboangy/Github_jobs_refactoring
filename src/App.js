@@ -12,12 +12,23 @@ const Heading = styled.h1`
     margin: auto;
     text-align: left;
     margin-bottom: 32px;
+    /* font-family: "Poppins-Bold"; */
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+    color: #282538;
+
+
+    span {
+        font-weight: 700;
+    }
 `;
 
 function App() {
     return (
         <>
-            <Heading><b>Github</b> Jobs</Heading>
+            <Heading><span>Github</span> Jobs</Heading>
             <Switch>
                 <Route exact path="/">
                     <HeaderPage />

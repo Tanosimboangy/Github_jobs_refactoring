@@ -38782,7 +38782,6 @@ function SearchPage() {
     handleSpecificLocation
   } = (0, _react.useContext)(_context.GlobalContext);
   const [checked, setChecked] = (0, _react.useState)(false);
-  const [location, setLocation] = (0, _react.useState)('');
 
   function handleCheckbox(e) {
     setChecked(!checked);
@@ -38794,9 +38793,7 @@ function SearchPage() {
 
   function handleJobsLocation(e) {
     const el = e.target.value;
-    setLocation(el);
-    handleLocation(location);
-    console.log(el);
+    handleLocation(el);
   }
 
   return /*#__PURE__*/_react.default.createElement(_components.Search, null, /*#__PURE__*/_react.default.createElement(_components.Search.FullTimejobs, null, /*#__PURE__*/_react.default.createElement(_components.Search.Input, {
@@ -39192,10 +39189,21 @@ const Heading = _styledComponents.default.h1`
     margin: auto;
     text-align: left;
     margin-bottom: 32px;
+    /* font-family: "Poppins-Bold"; */
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+    color: #282538;
+
+
+    span {
+        font-weight: 700;
+    }
 `;
 
 function App() {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Heading, null, /*#__PURE__*/_react.default.createElement("b", null, "Github"), " Jobs"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Heading, null, /*#__PURE__*/_react.default.createElement("span", null, "Github"), " Jobs"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/_react.default.createElement(_HeaderPage.default, null), /*#__PURE__*/_react.default.createElement(_MainLists.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
@@ -39237,6 +39245,42 @@ const GlobalStyles = (0, _styledComponents.createGlobalStyle)`
         a {
             text-decoration: none;
         }
+    }
+    @font-face {
+        font-family: "Poppins-bold";
+        src: local(Poppins-bold),
+        url(./Fonts/Poppins-Bold.woff2) format("woff2"),
+        url(./Fonts/Poppins-Bold.woff) format("woff"),
+    }
+    @font-face {
+        font-family: "Poppins-Medium";
+        src: local(Poppins-Medium),
+        url(./Fonts/Poppins-Medium.woff2) format("woff2"),
+        url(./Fonts/Poppins-Medium.woff) format("woff"),
+    }
+    @font-face {
+        font-family: "Poppins-Regular";
+        src: local(Poppins-Regular),
+        url(./Fonts/Poppins-Regular.woff2) format("woff2"),
+        url(./Fonts/Poppins-Regular.woff) format("woff"),
+    }
+    @font-face {
+        font-family: "Roboto-bold";
+        src: local(Roboto-bold),
+        url(./Fonts/Roboto-bold.woff2) format("woff2"),
+        url(./Fonts/Roboto-bold.woff) format("woff"),
+    }
+    @font-face {
+        font-family: "Roboto-Medium";
+        src: local(Roboto-Medium),
+        url(./Fonts/Roboto-Medium.woff2) format("woff2"),
+        url(./Fonts/Roboto-Medium.woff) format("woff"),
+    }
+    @font-face {
+        font-family: "Roboto-Regular";
+        src: local(Poppins_Regular),
+        url(./Fonts/Poppins-Regular.woff2) format("woff2"),
+        url(./Fonts/Poppins-Regular.woff) format("woff"),
     }
 `;
 exports.GlobalStyles = GlobalStyles;
@@ -39286,7 +39330,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64951" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52371" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

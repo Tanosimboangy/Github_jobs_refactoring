@@ -5,7 +5,6 @@ import { Search } from '../components';
 function SearchPage() {
     const {handlefulltimejobs, handleLocation, handleSpecificLocation} = useContext(GlobalContext);
     const [checked, setChecked] = useState(false);
-    const [location, setLocation] = useState('');
     
     function handleCheckbox(e) {
         setChecked(!checked)
@@ -16,9 +15,7 @@ function SearchPage() {
 
     function handleJobsLocation(e) {
         const el = e.target.value;
-        setLocation(el);
-        handleLocation(location);
-        console.log(el);
+        handleLocation(el);
     }
 
     return (
