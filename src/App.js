@@ -12,7 +12,6 @@ const Heading = styled.h1`
     margin: auto;
     text-align: left;
     margin-bottom: 32px;
-    /* font-family: "Poppins-Bold"; */
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
